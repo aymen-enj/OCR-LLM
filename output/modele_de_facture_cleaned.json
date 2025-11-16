@@ -1,0 +1,39 @@
+{
+  "en_tete": {
+    "fournisseur": {
+      "nom": "logiciel de facturation",
+      "adresse": "[Adresse de l'entreprise du client]",
+      "telephone": "[Téléphone]",
+      "email": null,
+      "siret": "[SIRET du client]",
+      "tva": "[Numéro de TVA du client]"
+    },
+    "client": {
+      "nom": "[Nom de l'entreprise du client]",
+      "adresse": "[Adresse de l'entreprise du client]",
+      "telephone": "[Téléphone]",
+      "email": null
+    }
+  },
+  "details": {
+    "numero_facture": "Facture No 552",
+    "date_emission": "12/07/2021",
+    "date_echeance": "26/07/2021",
+    "reference": "Désignation mon produit mon service"
+  },
+  "articles": [
+    {
+      "description": null,
+      "quantite": "2, 3",
+      "prix_unitaire": null,
+      "montant": null
+    }
+  ],
+  "totaux": {
+    "sous_total_ht": null,
+    "tva": "80,00 €",
+    "total_ttc": "480,00 €"
+  },
+  "conditions": "Conditions de paiement",
+  "mentions": "Mentions légales"
+}
