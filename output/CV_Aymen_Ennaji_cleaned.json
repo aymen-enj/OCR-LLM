@@ -1,0 +1,141 @@
+{
+  "a_propos_de_moi": {
+    "nom": "Ennaji Aymen",
+    "titre": "Développeur Web & Systémes d’Information",
+    "telephone": "0626424451",
+    "email": "aymenennaji@gmail.com",
+    "github": "https://github.com/aymen-enj",
+    "linkedin": "https://www.linkedin.com/in/aymen-ennaji/",
+    "description": "Curieux, rigoureux et autonome, je cherche à rejoindre une entreprise pour mettre en profit mes compétences en programmation, bases de données et résolution de problèmes."
+  },
+  "langues": [
+    {
+      "langue": "Français",
+      "niveau": "Courant"
+    },
+    {
+      "langue": "Anglais",
+      "niveau": "Technique"
+    },
+    {
+      "langue": "Arabe",
+      "niveau": "Langue maternelle"
+    }
+  ],
+  "education": [
+    {
+      "periode": "2023-2025",
+      "etablissement": "BTS Alkendi",
+      "ville": "Casablanca",
+      "diplome": "Diplôme de Technicien Supérieur",
+      "description": "Acquisition de compétences en programmation (HTML, CSS, JavaScript, PHP, MySQL, Java, C, VB.NET), en gestion de projets, en support technique et en administration de Systèmes informatiques.",
+      "competences": [
+        "compétence1",
+        "compétence2"
+      ]
+    },
+    {
+      "periode": "2022-2023",
+      "etablissement": "Lycee Ben Msick",
+      "ville": "Casablanca",
+      "diplome": null,
+      "description": "Formation scientifique axée sur les mathématiques, la physique et la chimie, développant une rigueur analytique et un raisonnement logique solide.",
+      "competences": [
+        "communication professionnelle"
+      ]
+    },
+    {
+      "periode": "2022",
+      "etablissement": null,
+      "ville": null,
+      "diplome": "Baccalauréat Sciences Physiques",
+      "description": "Formation scientifique axée sur les mathématiques, la physique et la chimie, développant une rigueur analytique et un raisonnement logique solide.",
+      "competences": [
+        "mathématiques",
+        "physique"
+      ]
+    }
+  ],
+  "experiences_professionnelles": [
+    {
+      "periode": "Mai-Juin 2025",
+      "entreprise": "IAAI Academy",
+      "ville": "Casablanca",
+      "poste": null,
+      "description": "Développement d'une plateforme web intelligente pour la préparation aux concours.",
+      "missions": [
+        "mission1",
+        "mission2"
+      ],
+      "technologies": [
+        "React",
+        "Node.js"
+      ]
+    },
+    {
+      "periode": "Janvier 2025",
+      "entreprise": null,
+      "ville": "Casablanca",
+      "poste": null,
+      "description": null,
+      "missions": [],
+      "technologies": []
+    },
+    {
+      "periode": "Juillet 2024",
+      "entreprise": "TRAGEM One",
+      "ville": "Casablanca",
+      "poste": null,
+      "description": "Stage de fin d'études.",
+      "missions": [],
+      "technologies": []
+    }
+  ],
+  "competences_techniques": {
+    "stack_principal": [
+      "React js",
+      "Node.js",
+      "Express.js",
+      "TypeScript"
+    ],
+    "frontend": [
+      "Tailwind CSS",
+      "HTML5/CSS3"
+    ],
+    "backend": [
+      "Node.js",
+      "Express",
+      "MySQL"
+    ],
+    "langages": [
+      "JavaScript",
+      "PHP",
+      "C",
+      "Java",
+      "VB.NET"
+    ],
+    "bases_de_donnees": [
+      "MySQL",
+      "T-SQL",
+      "PostgreSQL"
+    ],
+    "outils": [
+      "Git",
+      "PHP",
+      "JWT",
+      "OCR"
+    ]
+  },
+  "soft_skills": [
+    "Communication",
+    "Adaptabilité",
+    "Empathie",
+    "Attention aux détails"
+  ],
+  "loisirs": [
+    "Musculation",
+    "Voyages",
+    "Natation",
+    "Football"
+  ]
+}

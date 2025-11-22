@@ -1,0 +1,112 @@
+A PROPOS DE MOI
+
+ENNAJI AYMEN
+
+Développeur Web & Systémes d’lnformation
+
+& 0626424451 & aymenennajiS@gmail.com
+
+& github.com/aymen-enj
+
+lin] linkedin.com/in/aymen-ennaji
+
+LANGUES
+
+Jeune dipl6mé en Développement des Systemes d’Information (BTS ALKENDI -
+le développement web et
+l'information. Curieux, rigoureux et autonome, je cherche a rejoindre une entreprise
+
+Casablanca),
+
+passionné par
+
+FRANCAIS : Courant
+les technologies de
+ANGLAIS : Technique
+
+innovante pour y mettre a profit mes compétences en programmation, bases de
+
+données et résolution de problemes.
+
+EDUCATION
+
+ARABE : Langue maternelle
+
+2023-2025
+
+BTS Alkendi,
+Casablanca
+
+2022 - 2023
+
+Lycee Ben Msick,
+Casablanca
+
+Dipl6me de Technicien Supérieur
+Formation professionnelle spécialisée dans le développement des systémes d'information.
+Acquisition de compétences en programmation (HTML, CSS, JavaScript, PHP, MySQL, Java, C,
+VB.NET), en gestion de projets, en support technique et en administration de systemes
+informatiques. Maitrise des langues francaise, anglaise et arabe, ainsi que des compétences
+solides en communication professionnelle.
+
+Baccalauréat Sciences Physiques
+Formation scientifique axée sur les mathématiques, la physique et la chimie, développant une
+rigueur analytique et un raisonnement logique solide. Obtention du baccalauréat avec succés.
+
+EXPERIENCES PROFESSIONELLES
+
+Mai-Juin 2025
+IAAI Academy,
+Casablanca
+
+Janvier 2025
+
+BDE ALKHANSSA,
+Casablanca
+
+Juillet 2024
+
+TRAGEM One,
+Casablanca
+
+Stage de fin d'études
+
+Développement d'une plateforme web intelligente pour la préparation aux concours.
+- Extraction automatisée de contenus depuis PDF (QCM, formules, images)
+
+— Interface dynamique avec rendu mathématique (React, TypeScript, MathJax)
+-Authentification Supabase, génération de résultats PDF et animations 3D
+
+Freelance - Application de réservation
+
+Création d'une application web pour la gestion d'un événement étudiant.
+
+— Frontend : React, Tailwind CSS | Backend : Node,js, Express, MySQL
+
+-Authentification JWT, calculs dynamiques, génération de PDF, tableau de bord admin
+
+Stage d'observation
+
+Initiation au fonctionnement d'un service informatique.
+~ Suivi du traitement des commandes informatisées
+- Aide a la gestion de données et amélioration de suivi interne
+
+COMPETENCES TECHNIQUES
+
+e Stack Principal :
+React js, Nodejs,
+Expressjjs,
+TypeScript
+
+SOFT SKILLS
+
+¢ Communication
+e« Adaptabilité
+
+Frontend : e Langages « Basesde Données: - Outils & Langages:
+Tailwind CSS, étudiés : MySQL, T-SQL, Git, PHP, JWT, OCR,
+HTMLS/CSS3, C, Java, Vb.net PostgreSql Gestion de Projet
+MathJax
+LOISIRS
+¢ Empathie « Voyages e« Musculation
+« Attention aux détails « Natation « Football
