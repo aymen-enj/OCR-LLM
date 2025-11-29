@@ -1,1 +1,29 @@
-input\CV_Aymen_Ennaji.pdf
+# Environnement virtuel Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Fichiers d'entrée - Documents sources (ne pas versionner)
+input/*.pdf
+input/*.png
+input/*.jpg
+input/*.jpeg
+input/*.bmp
+input/*.tiff
+
+# Fichiers de sortie générés (ne pas versionner)
+output/*.txt
+output/*.json
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
