@@ -27,3 +27,16 @@ Thumbs.db
 .vscode/
 .idea/
 *.code-workspace
+
+# Rapports LaTeX compilés
+/rapports.tex
+
+# Fichiers de rapport LaTeX
+rapport.tex
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.pdf

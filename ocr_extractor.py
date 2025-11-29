@@ -621,7 +621,7 @@ def extract_json_from_ocr_text(raw_text, model_name="llama3.2", use_llm=True, do
         pre_processed = pre_process_ocr_text(raw_text)
         
         print(f"Génération du JSON structuré directement depuis l'OCR (type: {doc_type})...")
-        print("Correction OCR + extraction structurée en une seule étape...")
+        print("Correction OCR + extraction structurée en cours...")
         
         # Obtenir le prompt adapté au type de document (intégrant correction OCR + extraction JSON)
         prompt_json = get_json_prompt_from_ocr(pre_processed, doc_type)
