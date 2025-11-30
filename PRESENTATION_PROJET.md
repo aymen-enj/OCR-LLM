@@ -1,63 +1,44 @@
-# Projet OCR Intelligent - Présentation
+
+# Ultimate OCR & LLM Parser - Présentation
 
 ## 📋 Résumé du Projet
 
 **Titre:** Système d'Extraction OCR Intelligent avec Post-traitement LLM
 
-**Objectif:** Développer une application Python capable d'extraire le texte de documents scannés (PDF, images) avec correction automatique des erreurs OCR et structuration intelligente des données en format JSON.
+
+**Objectif:** Extraire et structurer automatiquement le texte de documents PDF ou images (PNG, JPG, etc.) avec correction intelligente des erreurs OCR et génération d'un JSON structuré selon le type de document (CV, facture, formulaire, générique).
 
 ---
 
 ## 🛠️ Technologies et Outils Utilisés
 
-### 1. **Technologies de Base**
 
-#### **OCR (Optical Character Recognition)**
-- **Tesseract OCR** : Moteur OCR open-source
-  - Chemin d'installation: `C:\Program Files\Tesseract-OCR\tesseract.exe`
-  - Langues supportées: Français + Anglais (fra+eng)
-  - Rôle: Extraction du texte brut depuis les images/PDF
+### 1. **Technologies et Outils**
 
-#### **Python et Bibliothèques**
-- **Python 3.x** : Langage de programmation principal
-- **pytesseract (v0.3.10)** : Interface Python pour Tesseract OCR
-- **pdf2image (v1.16.3)** : Conversion PDF → Images pour traitement OCR
-- **Pillow (v10.1.0)** : Manipulation d'images (PIL)
-- **opencv-python (v4.8.1.78)** : Traitement d'images avancé
-
-#### **LLM (Large Language Model)**
-- **Ollama** : Plateforme pour exécuter des LLM en local
-  - Modèle utilisé: **llama3.2** (par défaut)
-  - Autres modèles supportés: mistral, etc.
-  - Rôle: Post-traitement intelligent pour correction OCR et structuration
-
-#### **Traitement de Données**
-- **JSON** : Format de sortie structuré
-- **RegEx** : Patterns pour corrections OCR de base
-- **argparse** : Interface en ligne de commande
+- **OCR** : Tesseract OCR (via pytesseract, pdf2image, Pillow, OpenCV)
+- **LLM** : Ollama (modèle par défaut : llama3.2, autres modèles supportés)
+- **Python 3.x** et bibliothèques : argparse, json, rich, etc.
+- **Structuration** : JSON, détection automatique du type, enrichissement par regex
 
 ---
 
 ## 🏗️ Architecture du Projet
+
 
 ### Structure des Fichiers
 
 ```
 projet_ocr_fst/
 │
-├── ocr_extractor.py          # Script principal (778 lignes)
+├── ocr_extractor.py          # Script principal
 ├── requirements.txt          # Dépendances Python
-├── README.md                 # Documentation complète
-├── PRESENTATION_PROJET.md    # Ce document
+├── README.md                 # Documentation
+├── PRESENTATION_PROJET.md    # Présentation
 │
 ├── input/                    # Documents sources
-│   ├── CV_Aymen_Ennaji.pdf
-│   ├── modele_de_facture.pdf
-│   └── rempli.pdf
-│
-└── output/                   # Résultats générés
-    ├── *_extracted.txt      # Texte brut OCR
-    └── *_cleaned.json       # JSON structuré
+└── output/                   # Résultats JSON structuré
+  ├── nom_fichier_data.json # Résultat final
+  └── ...
 ```
 
 ---
@@ -83,274 +64,102 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### **Étape 2 : Extraction OCR (Texte Brut)**
 
-#### **2.1 Pour les Images (PNG, JPG, etc.)**
-```python
-def extract_text_from_image(image_path):
-    # 1. Ouvrir l'image avec PIL
-    image = Image.open(image_path)
-    
-    # 2. Extraire le texte avec Tesseract OCR
-    text = pytesseract.image_to_string(image, lang='fra+eng')
-    
-    # 3. Retourner le texte brut
-    return text
-```
+### **Étape 2 : Extraction OCR et Markdown**
 
-#### **2.2 Pour les PDF**
-```python
-def extract_text_from_pdf(pdf_path):
-    # 1. Convertir chaque page PDF en image
-    images = convert_from_path(pdf_path)
-    
-    # 2. Extraire le texte de chaque page avec OCR
-    all_text = []
-    for image in images:
-        text = pytesseract.image_to_string(image, lang='fra+eng')
-        all_text.append(text)
-    
-    # 3. Combiner toutes les pages
-    return "\n\n".join(all_text)
-```
-
-**Résultat:** Fichier `*_extracted.txt` contenant le texte brut OCR (avec erreurs potentielles)
+- Pour les PDF :
+  - Extraction du texte en Markdown avec PyMuPDF4LLM
+  - Si le texte est insuffisant, fallback OCR (conversion PDF → images → OCR sur chaque page)
+- Pour les images :
+  - OCR direct avec pytesseract
+- Prétraitement des images (rotation, contraste) pour améliorer la qualité
 
 ---
 
-### **Étape 3 : Pré-traitement (Corrections de Base)**
 
-```python
-def pre_process_ocr_text(text):
-    # Corrections automatiques via RegEx
-    corrections = {
-        'Dipl6mé' → 'Diplômé',
-        'lnformation' → 'Information',
-        'Node,js' → 'Node.js',
-        'Expressjjs' → 'Express.js',
-        # ... etc
-    }
-    # Applique les corrections
-    return corrected_text
-```
+### **Étape 3 : Détection automatique du type de document**
 
-**Objectif:** Corriger les erreurs OCR les plus évidentes avant le LLM
+- Analyse heuristique par mots-clés pondérés (CV, facture, formulaire, générique)
+- Peut être forcé par l'option `--type`
 
 ---
 
-### **Étape 4 : Détection Automatique du Type de Document**
 
-```python
-def detect_document_type(text):
-    # Analyse des mots-clés pour détecter:
-    # - CV: curriculum, vitae, compétences, formation
-    # - Facture: facture, invoice, TVA, HT, TTC
-    # - Formulaire: formulaire, nom, prénom, adresse
-    # - General: par défaut
-    return detected_type
-```
+### **Étape 4 : Analyse LLM et structuration JSON**
 
-**Résultat:** Type de document détecté automatiquement ou spécifié par l'utilisateur
+- Construction d'un prompt dynamique selon le type détecté
+- Appel au modèle Ollama pour correction et extraction structurée en une seule étape
+- Génération d'un JSON strict selon le schéma cible (CV, facture, formulaire, générique)
 
 ---
 
-### **Étape 5 : Post-traitement Intelligent avec LLM**
 
-#### **5.1 Génération du JSON Structuré (OPTIMISÉ)**
+### **Étape 5 : Correction et enrichissement des données**
 
-**Nouvelle approche optimisée:** Un seul appel LLM qui fait tout en une fois !
-
-```python
-def extract_json_from_ocr_text(raw_text, doc_type):
-    # 1. Pré-traitement avec corrections de base
-    pre_processed = pre_process_ocr_text(raw_text)
-    
-    # 2. Génération du prompt adapté au type de document
-    prompt = get_json_prompt_from_ocr(pre_processed, doc_type)
-    #    Ce prompt intègre:
-    #    - Instructions de correction OCR
-    #    - Structure JSON attendue selon le type
-    #    - Instructions d'extraction structurée
-    
-    # 3. Appel unique à Ollama (correction + extraction en une étape)
-    response = ollama.generate(model='llama3.2', prompt=prompt)
-    
-    # 4. Extraction et parsing du JSON
-    json_data = json.loads(response['response'])
-    
-    return json_data
-```
-
-**Avantages:**
-- ✅ **2x plus rapide** : Un seul appel LLM au lieu de deux
-- ✅ **Meilleure qualité** : Correction et extraction dans la même étape
-- ✅ **Optimisé** : Pas d'étape intermédiaire de texte nettoyé
-
----
-
-### **Étape 6 : Structures JSON selon le Type**
-
-#### **Pour les CV:**
-```json
-{
-  "a_propos_de_moi": {
-    "nom": "...",
-    "titre": "...",
-    "telephone": "...",
-    "email": "...",
-    "github": "...",
-    "linkedin": "..."
-  },
-  "langues": [...],
-  "education": [...],
-  "experiences_professionnelles": [...],
-  "competences_techniques": {...},
-  "soft_skills": [...],
-  "loisirs": [...]
-}
-```
-
-#### **Pour les Factures:**
-```json
-{
-  "en_tete": {
-    "fournisseur": {...},
-    "client": {...}
-  },
-  "details": {...},
-  "articles": [...],
-  "totaux": {...}
-}
-```
-
-#### **Pour les Formulaires:**
-```json
-{
-  "titre": "...",
-  "sections": [...],
-  "tous_les_champs": [...],
-  "signature": {...}
-}
-```
+- Extraction d'emails, téléphones, LinkedIn, IBAN par regex
+- Injection dans le JSON si le LLM les a manqués
 
 ---
 
 ## 🔧 Fonctionnalités Principales
 
-### 1. **Extraction OCR Multi-format**
-- ✅ PDF (multi-pages)
-- ✅ Images: PNG, JPG, JPEG, BMP, TIFF
 
-### 2. **Correction Automatique des Erreurs OCR**
-- ✅ Correction via RegEx (pré-traitement)
-- ✅ Correction intelligente via LLM (post-traitement)
-- ✅ Exemples de corrections:
-  - "Dipl6mé" → "Diplômé"
-  - "lnformation" → "Information"
-  - "Node,js" → "Node.js"
+## 🔧 Fonctionnalités Principales
 
-### 3. **Détection Automatique du Type de Document**
-- ✅ CV
-- ✅ Facture
-- ✅ Formulaire
-- ✅ Général (détection automatique par mots-clés)
-
-### 4. **Structuration Intelligente**
-- ✅ Organisation logique du contenu
-- ✅ Conservation de la hiérarchie (sections, sous-sections)
-- ✅ Extraction des informations clés
-
-### 5. **Export JSON Structuré**
-- ✅ Format JSON standard
-- ✅ Structure adaptée au type de document
-- ✅ Données prêtes pour traitement automatique
+- Extraction OCR multi-format (PDF, images)
+- Détection automatique du type de document (CV, facture, formulaire, générique)
+- Structuration intelligente des données avec LLM (Ollama)
+- Export JSON structuré selon le type détecté
+- Correction et enrichissement des données (emails, téléphones, IBAN, etc.)
 
 ---
 
 ## 📊 Exemple d'Utilisation
 
-### **Commande de base:**
+
+### Exemple d'utilisation
+
 ```bash
 python ocr_extractor.py input/CV_Aymen_Ennaji.pdf
-```
-
-### **Processus automatique:**
-1. **OCR** → Extraction du texte brut → `CV_Aymen_Ennaji_extracted.txt`
-2. **Détection** → Type de document: "cv" (automatique)
-3. **LLM** → Correction OCR + Extraction JSON (une seule étape)
-4. **Résultat** → `CV_Aymen_Ennaji_cleaned.json`
-
-### **Options avancées:**
-```bash
-# Spécifier le type de document
-python ocr_extractor.py facture.pdf --type facture
-
-# Choisir le modèle LLM
-python ocr_extractor.py document.pdf --model mistral
-
-# Désactiver le LLM (OCR uniquement)
-python ocr_extractor.py document.pdf --no-llm
+python ocr_extractor.py input/facture.pdf --type facture
+python ocr_extractor.py input/document.pdf --model mistral
+python ocr_extractor.py input/image.png --output output
 ```
 
 ---
 
 ## 🎯 Résultats Obtenus
 
-### **Avant (OCR brut):**
-```
-A PROPOS DE MOI
-ENNAJI AYMEN
-Développeur Web & Systémes d'lnformation
-& 0626424451 & aymenennajiS@gmail.com
-lin] linkedin.com/in/aymen-ennaji
-LANGUES
-Jeune dipl6mé en Développement des Systemes d'Information
-...
-```
 
-### **Après (JSON structuré):**
+### Exemple de résultat JSON (CV)
 ```json
 {
-  "a_propos_de_moi": {
+  "candidat": {
     "nom": "Ennaji Aymen",
-    "titre": "Développeur Web & Systèmes d'Information",
-    "telephone": "0626424451",
     "email": "aymenennaji@gmail.com",
-    "linkedin": "linkedin.com/in/aymen-ennaji"
+    "telephone": "0626424451",
+    "liens": ["linkedin.com/in/aymen-ennaji"]
   },
-  "langues": [
-    {"langue": "Français", "niveau": "Courant"},
-    {"langue": "Anglais", "niveau": "Technique"},
-    {"langue": "Arabe", "niveau": "Langue maternelle"}
-  ],
-  "education": [...],
-  "experiences_professionnelles": [...]
+  "profil_synthese": "Développeur Web & Systèmes d'Information...",
+  "competences": {
+    "langages": ["Python", "JavaScript"],
+    "outils": ["Node.js", "Express.js"],
+    "soft_skills": ["Autonomie", "Esprit d'équipe"]
+  },
+  "experience": [{"poste": "...", "entreprise": "...", "dates": "...", "missions": ["..."]}],
+  "education": [{"diplome": "...", "ecole": "...", "annee": "..."}]
 }
 ```
-
-**Corrections automatiques:**
-- ✅ "dipl6mé" → "Diplômé"
-- ✅ "lnformation" → "Information"
-- ✅ "Systemes" → "Systèmes"
-- ✅ "aymenennajiS" → "aymenennaji"
-- ✅ "lin]" → "linkedin"
 
 ---
 
 ## ⚡ Optimisations Implémentées
 
-### 1. **Passage Direct OCR → JSON**
-- **Avant:** OCR → Texte nettoyé → JSON (2 appels LLM)
-- **Après:** OCR → JSON (1 seul appel LLM)
-- **Gain:** 2x plus rapide
 
-### 2. **Pré-traitement RegEx**
-- Corrections rapides avant le LLM
-- Réduction des erreurs courantes
-
-### 3. **Détection Automatique**
-- Évite de spécifier le type manuellement
-- Adaptation automatique du traitement
+### Optimisations
+- Passage direct OCR → JSON (un seul appel LLM)
+- Correction et enrichissement par regex
+- Détection automatique du type
 
 ---
 
@@ -402,30 +211,17 @@ Jeune dipl6mé en Développement des Systemes d'Information
 
 ---
 
-## 📚 Références Techniques
 
-- **Tesseract OCR:** https://github.com/tesseract-ocr/tesseract
-- **Ollama:** https://ollama.ai/
-- **pytesseract:** https://github.com/madmaze/pytesseract
-- **pdf2image:** https://github.com/Belval/pdf2image
+## 📚 Références Techniques
+- Tesseract OCR : https://github.com/tesseract-ocr/tesseract
+- Ollama : https://ollama.ai/
+- pytesseract : https://github.com/madmaze/pytesseract
+- pdf2image : https://github.com/Belval/pdf2image
 
 ---
 
+
 ## 📝 Conclusion
 
-Ce projet démontre l'intégration réussie de **technologies OCR** et **LLM** pour créer un système d'extraction intelligent. 
-
-**Principales réalisations:**
-- ✅ Système complet et fonctionnel
-- ✅ Support multi-types de documents
-- ✅ Correction automatique des erreurs
-- ✅ Export structuré en JSON
-- ✅ Optimisations pour performance
-
-**Technologies maîtrisées:**
-- OCR (Tesseract)
-- LLM (Ollama)
-- Python et bibliothèques
-- Traitement de documents
-- Structuration de données
+Ce projet intègre OCR et LLM pour une extraction et structuration intelligente de documents variés. Il détecte automatiquement le type, corrige les erreurs, enrichit les données, et exporte un JSON prêt à l'emploi pour l'automatisation ou l'intégration.
 
