@@ -5,4 +5,8 @@ opencv-python==4.8.1.78
 ollama==0.1.6
 numpy<2.0
 python-dotenv==0.21.1
+customtkinter==5.2.1
+tkinterdnd2==0.3.0
+pymupdf4llm
+rich
 

@@ -26,6 +26,23 @@ Ce projet permet d'extraire et de structurer automatiquement le texte de fichier
 
 ## Utilisation
 
+### 🎨 Interface Graphique (Recommandé)
+
+Lancez l'interface graphique moderne :
+```bash
+python ocr_gui.py
+```
+
+**Fonctionnalités :**
+- ✨ Glisser-déposer de fichiers
+- 🎯 Sélection intuitive du type et du modèle
+- 📊 Affichage en temps réel des résultats
+- 💾 Export et copie faciles
+
+Consultez [GUI_GUIDE.md](file:///c:/Users/aymen/OneDrive/Desktop/projet_ocr_fst/GUI_GUIDE.md) pour plus de détails.
+
+### 💻 Ligne de Commande
+
 ## Utilisation
 
 
