@@ -462,6 +462,55 @@ Quatre schémas JSON cibles sont définis dans le code :
 \end{lstlisting}
 
 % =============================================================================
+% 2.4 CONCEPTION DÉTAILLÉE (NOUVELLE SECTION)
+% =============================================================================
+\section{Conception Détaillée}
+
+Cette section détaille l'architecture logicielle de l'application, en s'appuyant sur les standards UML (Unified Modeling Language) pour illustrer la structure statique et le comportement dynamique du système.
+
+\subsection{Diagramme de Classes}
+
+Le diagramme de classes ci-dessous présente l'organisation des principaux modules du système et leurs interactions. L'architecture respecte le principe de responsabilité unique (SRP).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{diagramme_classes.png}
+    \caption{Diagramme de Classes Simplifié}
+    \label{fig:class_diagram}
+\end{figure}
+
+L'application est structurée autour de la classe principale \texttt{OCRApp} qui orchestre les interactions. Elle délègue les tâches lourdes à des classes spécialisées : \texttt{SmartExtractor} pour l'extraction brute, \texttt{DocumentClassifier} pour l'identification du type, et \texttt{LLMOrchestrator} pour l'analyse sémantique.
+
+\subsection{Diagramme de Séquence}
+
+Le diagramme suivant illustre le flux d'exécution séquentiel lors du traitement d'un document par l'utilisateur via l'interface graphique.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{diagramme_sequence.png}
+    \caption{Diagramme de Séquence : Traitement d'un document}
+    \label{fig:seq_diagram}
+\end{figure}
+
+\subsection{Choix de Conception et Design Patterns}
+
+Pour assurer la maintenabilité et l'extensibilité du projet, plusieurs patrons de conception (Design Patterns) ont été mis en œuvre :
+
+\begin{description}
+    \item[Pattern Facade / Orchestrator] : La classe \texttt{OCRApp} agit comme une façade, masquant la complexité des modules sous-jacents (OCR, LLM, Regex) à l'utilisateur final. De même, \texttt{LLMOrchestrator} simplifie l'interaction complexe avec l'API Ollama.
+    
+    \item[Pattern Strategy] : Dans \texttt{SmartExtractor}, une stratégie est sélectionnée dynamiquement en fonction du type de fichier :
+    \begin{itemize}
+        \item \textit{Stratégie PDF Natif} : Utilisation de \texttt{pymupdf4llm} pour préserver la structure.
+        \item \textit{Stratégie Image/Scan} : Fallback sur le pipeline \texttt{pdf2image} + \texttt{Tesseract} + \texttt{ImageProcessor}.
+    \end{itemize}
+    
+    \item[Pattern Observer (Événementiel)] : L'interface graphique repose sur une architecture événementielle native de Tkinter. Le drag \& drop déclenche des événements (\texttt{<<Drop>>}) qui sont capturés et traités par les handlers appropriés.
+    
+    \item[Programmation Concurrentielle] : L'utilisation du modèle \textit{Worker Thread} permet de déporter les tâches bloquantes (I/O, appels réseaux/GPU) hors du thread principal de l'interface (Main Loop), garantissant que l'application reste toujours réactive (pas de gel de fenêtre).
+\end{description}
+
+% =============================================================================
 % CHAPITRE 3 : MÉTHODOLOGIE DE DÉVELOPPEMENT
 % =============================================================================
 \chapter{Méthodologie de Développement}

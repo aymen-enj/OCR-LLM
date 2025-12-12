@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import threading
+import re
 from pathlib import Path
 from tkinter import filedialog, messagebox
 import customtkinter as ctk
@@ -27,7 +28,31 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 
+class StdoutRedirector:
+    """Redirige stdout/stderr vers un widget Tkinter"""
+    def __init__(self, widget):
+        self.widget = widget
+        self.ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+
+    def write(self, message):
+        if not message: return
+        # Nettoyer codes ANSI (couleurs Rich)
+        clean_msg = self.ansi_escape.sub('', message)
+        
+        def append():
+            self.widget.configure(state="normal")
+            self.widget.insert("end", clean_msg)
+            self.widget.see("end")
+            self.widget.configure(state="disabled")
+        
+        # Thread-safe update
+        self.widget.after(0, append)
+
+    def flush(self):
+        pass
+
 class OCRApp(ctk.CTk, TkinterDnD.DnDWrapper):
+
     """Application GUI pour OCR avec drag & drop"""
     
     def __init__(self):
@@ -292,29 +317,63 @@ class OCRApp(ctk.CTk, TkinterDnD.DnDWrapper):
         self.progress.set(0)
         self.status_label.configure(text="Traitement en cours...", text_color="#2196f3")
         
+        # Reset text box for logs
+        self.result_text.configure(state="normal")
+        self.result_text.delete("1.0", "end")
+        self.result_text.insert("1.0", "Les résultats apparaîtront ici...\n") # Remettre le placeholder pour que le check fonctionne
+        self.result_text.configure(state="disabled")
+        
         # Lancer dans un thread pour ne pas bloquer l'interface
         thread = threading.Thread(target=self._run_ocr)
         thread.daemon = True
         thread.start()
         
-        # Animation de la progress bar
-        self._animate_progress()
+        # Reset progress
+        self.progress.set(0)
         
-    def _animate_progress(self):
-        """Animer la barre de progression"""
-        if self.processing:
-            current = self.progress.get()
-            if current < 0.9:
-                self.progress.set(current + 0.02)
-            self.after(100, self._animate_progress)
+    def update_progress(self, current, message):
+        """Callback pour mettre à jour la progression depuis le thread"""
+        self.after(0, lambda: self.progress.set(current))
+        self.after(0, lambda: self.status_label.configure(text=message))
+        
+        # Afficher aussi dans la zone de logs (panneau droit)
+        def log_to_text():
+            self.result_text.configure(state="normal")
+            # Effacer le placeholder si c'est le premier message
+            if self.result_text.get("1.0", "end-1c").strip() == "Les résultats apparaîtront ici...":
+                self.result_text.delete("1.0", "end")
+            
+            # Ajouter le log avec timestamp simule ou pourcentage
+            self.result_text.insert("end", f"➤ [{int(current*100)}%] {message}\n")
+            self.result_text.see("end") # Auto-scroll
+            self.result_text.configure(state="disabled")
+            
+        self.after(0, log_to_text)
             
     def _run_ocr(self):
         """Exécution du traitement OCR"""
+        # Redirection des LOGS vers l'interface
+        import sys
+        old_stdout = sys.stdout
+        old_stderr = sys.stderr
+        
+        sys.stdout = StdoutRedirector(self.result_text)
+        sys.stderr = StdoutRedirector(self.result_text)
+        
         try:
+            print("-" * 50)
+            print(f"🚀 DOSSIER : {self.output_var.get()}")
+            print(f"📄 FICHIER : {self.selected_file.name}")
+            print("-" * 50)
+            
             # 1. Extraction
             self._update_status("Extraction du texte...")
             extractor = SmartExtractor()
-            raw_text = extractor.extract(self.selected_file)
+            # On passe notre fonction de callback
+            raw_text = extractor.extract(self.selected_file, progress_callback=self.update_progress)
+            
+            # Fin extraction -> 80%
+            self.update_progress(0.8, "Analyse sémantique...")
             
             # 2. Détection du type
             self._update_status("Détection du type de document...")
@@ -352,7 +411,13 @@ class OCRApp(ctk.CTk, TkinterDnD.DnDWrapper):
             messagebox.showerror("Erreur", f"Erreur lors du traitement :\n{str(e)}")
             self.progress.set(0)
             
+            self.progress.set(0)
+            
         finally:
+            # Restaurer stdout
+            sys.stdout = old_stdout
+            sys.stderr = old_stderr
+            
             self.processing = False
             self.process_btn.configure(state="normal")
             

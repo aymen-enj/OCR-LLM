@@ -136,33 +136,64 @@ class SmartExtractor:
     def __init__(self):
         self.img_processor = ImageProcessor()
     
-    def extract(self, file_path: Path) -> str:
+    def extract(self, file_path: Path, progress_callback=None) -> str:
         ext = file_path.suffix.lower()
-        if ext == '.pdf': return self._handle_pdf(file_path)
-        elif ext in ['.jpg', '.png', '.jpeg']: return self._handle_image(file_path)
+        if ext == '.pdf': return self._handle_pdf(file_path, progress_callback)
+        elif ext in ['.jpg', '.png', '.jpeg']: return self._handle_image(file_path, progress_callback)
         else: raise ValueError(f"Format non supporté: {ext}")
 
-    def _handle_pdf(self, pdf_path: Path) -> str:
+    def _handle_pdf(self, pdf_path: Path, progress_callback=None) -> str:
         try:
+            logger.info(f"📄 Traitement PDF : {pdf_path.name}")
+            if progress_callback: progress_callback(0.1, "Lecture PDF (Markdown)...")
             md_text = pymupdf4llm.to_markdown(str(pdf_path))
+            
             if len(re.sub(r'\s+', '', md_text)) > 50:
+                logger.info("✅ Extraction native réussie (>50 chars)")
+                if progress_callback: progress_callback(1.0, "Extraction Markdown terminée")
                 return f"--- CONTENU MARKDOWN ---\n{md_text}"
-            return self._ocr_fallback(pdf_path)
-        except Exception:
-            return self._ocr_fallback(pdf_path)
+            
+            logger.warning("⚠️ Contenu insuffisant, bascule vers OCR...")
+            return self._ocr_fallback(pdf_path, progress_callback)
+        except Exception as e:
+            logger.error(f"❌ Erreur lecture native : {e}")
+            return self._ocr_fallback(pdf_path, progress_callback)
 
-    def _ocr_fallback(self, pdf_path: Path) -> str:
-        logger.warning("Mode OCR activé (PDF Image)")
+    def _ocr_fallback(self, pdf_path: Path, progress_callback=None) -> str:
+        logger.info("📷 Démarrage OCR (Tesseract / PyMuPDF)...")
+        if progress_callback: progress_callback(0.2, "Conversion PDF -> Images...")
         images = convert_from_path(str(pdf_path), dpi=300)
+        total = len(images)
+        logger.info(f"🖼️ {total} pages à traiter")
         full_text = []
-        for i, img in enumerate(track(images, description="OCR en cours...")):
+        
+        for i, img in enumerate(images):
+            if progress_callback: 
+                prog = 0.2 + (0.6 * (i / total))
+                progress_callback(prog, f"OCR Page {i+1}/{total}...")
+            
+            logger.info(f"   Utilization Page {i+1}/{total}...")    
             processed = self.img_processor.preprocess_for_ocr(img)
             txt = pytesseract.image_to_string(processed, lang='fra+eng', config='--psm 4')
             full_text.append(f"## PAGE {i+1}\n{txt}")
+            
+        logger.info("✨ OCR terminé")
+        if progress_callback: progress_callback(0.8, "Assemblage du texte...")
         return "\n".join(full_text)
 
-    def _handle_image(self, img_path: Path) -> str:
-        return pytesseract.image_to_string(Image.open(img_path), lang='fra+eng')
+    def _handle_image(self, img_path: Path, progress_callback=None) -> str:
+        logger.info(f"🖼️ Traitement Image : {img_path.name}")
+        if progress_callback: progress_callback(0.3, "Prétraitement image...")
+        img = Image.open(img_path)
+        processed = self.img_processor.preprocess_for_ocr(img)
+        
+        logger.info("🔍 Lancement Tesseract...")
+        if progress_callback: progress_callback(0.5, "OCR en cours...")
+        txt = pytesseract.image_to_string(processed, lang='fra+eng')
+        
+        logger.info("✅ Extraction terminée")
+        if progress_callback: progress_callback(1.0, "Extraction image terminée")
+        return txt
 
 class LLMOrchestrator:
     def __init__(self, model: str):
