@@ -16,6 +16,7 @@ echo.
 echo [2/3] Compilation en cours...
 echo Cela peut prendre 1 a 2 minutes.
 echo Inclusion des bibliotheques graphiques (CustomTkinter, TkinterDnD)...
+cd ..
 
 pyinstaller --noconsole --onefile ^
     --name "Ultimate_OCR_App" ^

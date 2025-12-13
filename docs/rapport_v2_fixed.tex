@@ -96,11 +96,11 @@
 \vspace*{-2cm}
     \begin{center}
         \begin{tabular}{@{} l c r @{}}
-    \includegraphics[width=3cm]{609-6094376_uh1.png}
+    \includegraphics[width=3cm]{../609-6094376_uh1.png}
     \hspace{1.7cm} & 
-    \includegraphics[width=6cm]{Ministere-de-lEnseignement-Superieur-Concours-Emploi-Recrutement.png}
+    \includegraphics[width=6cm]{../Ministere-de-lEnseignement-Superieur-Concours-Emploi-Recrutement.png}
     \hspace{1.7cm} & 
-    \includegraphics[width=3cm]{logo-fst.png}
+    \includegraphics[width=3cm]{../logo-fst.png}
 \end{tabular}
 
         \vspace*{1.5cm}
@@ -233,7 +233,7 @@ Le pipeline du projet suit une architecture modulaire et séquentielle, où chaq
 % --- FIGURE TIKZ AUTOMATIQUE ---
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{diagramme_flux.png}
+    \includegraphics[width=1.0\textwidth]{../diagrams/diagramme_flux.png}
     \caption{Diagramme de flux de données (Data Flow) de l'application OCR v3.3}
     \label{fig:pipeline}
 \end{figure}
@@ -307,7 +307,7 @@ Le prétraitement d'images améliore significativement la qualité de l'OCR. La 
 Code illustratif :
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{screenshots/code1.png}
+    \includegraphics[width=0.9\textwidth]{../screenshots/code1.png}
     \caption{Prétraitement d'image (ImageProcessor)}
     \label{fig:code_preprocess}
 \end{figure}
@@ -425,7 +425,7 @@ Le diagramme de classes ci-dessous présente l'organisation des principaux modul
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{diagramme_classes.png}
+    \includegraphics[width=0.9\textwidth]{../diagrams/diagramme_classes.png}
     \caption{Diagramme de Classes Simplifié}
     \label{fig:class_diagram}
 \end{figure}
@@ -438,7 +438,7 @@ Le diagramme suivant illustre le flux d'exécution séquentiel lors du traitemen
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{diagramme_sequence.png}
+    \includegraphics[width=0.9\textwidth]{../diagrams/diagramme_sequence.png}
     \caption{Diagramme de Séquence : Traitement d'un document}
     \label{fig:seq_diagram}
 \end{figure}
@@ -479,7 +479,7 @@ La stratégie d'extraction a été pensée pour être robuste face à la variét
 Pour les PDF :
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{screenshots/code2.png}
+    \includegraphics[width=0.9\textwidth]{../screenshots/code2.png}
     \caption{Tentative d'extraction structurée (Markdown)}
     \label{fig:code_md_extract}
 \end{figure}
@@ -491,7 +491,7 @@ Pour les PDF :
 Si le Markdown est insuffisant :
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{screenshots/code3.png}
+    \includegraphics[width=0.9\textwidth]{../screenshots/code3.png}
     \caption{Fallback OCR pour PDF (Mode Image)}
     \label{fig:code_fallback}
 \end{figure}
@@ -502,7 +502,7 @@ Le prompt est construit dynamiquement selon le type détecté. Exemple pour un C
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{screenshots/code4.png}
+    \includegraphics[width=0.9\textwidth]{../screenshots/code4.png}
     \caption{Appel LLM avec prompt dynamique et schéma JSON}
     \label{fig:code_llm}
 \end{figure}
@@ -692,7 +692,7 @@ L'application GUI est implémentée dans la classe \texttt{OCRApp} qui hérite d
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{screenshots/code5.png}
+    \includegraphics[width=0.9\textwidth]{../screenshots/code5.png}
     \caption{Architecture de la classe OCRApp}
     \label{fig:code_ocrapp}
 \end{figure}
@@ -756,7 +756,7 @@ Pour éviter le gel de l'interface pendant le traitement (qui peut durer 10-30 s
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{screenshots/code6.png}
+    \includegraphics[width=0.9\textwidth]{../screenshots/code6.png}
     \caption{Traitement asynchrone (Threading)}
     \label{fig:code_threading}
 \end{figure}
@@ -767,7 +767,7 @@ L'intégration de TkinterDnD2 permet un glisser-déposer natif :
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{screenshots/code7.png}
+    \includegraphics[width=0.9\textwidth]{../screenshots/code7.png}
     \caption{Configuration Drag \& Drop}
     \label{fig:code_drag_drop}
 \end{figure}
@@ -1002,10 +1002,14 @@ python ocr_extractor.py input/facture.pdf --type facture --model llama3.2
 projet_ocr_fst/
 ├── ocr_gui.py                # APPLICATION PRINCIPALE (Interface Graphique)
 ├── ocr_extractor.py          # Moteur backend d'extraction et IA
-├── start_gui.bat             # Script de lancement rapide
-├── build_exe.bat             # Script de compilation en .exe
-├── presentation.tex          # Présentation Beamer (Slides)
-├── rapport_v2_fixed.tex      # Rapport complet LaTeX
+├── scripts/                  # Scripts utilitaires
+│   ├── start_gui.bat         # Lancement rapide
+│   └── build_exe.bat         # Compilation .exe
+├── docs/                     # Documentation et Rapports
+│   ├── presentation.tex      # Présentation Beamer
+│   └── rapport_v2_fixed.tex  # Rapport complet LaTeX
+├── diagrams/                 # Diagrammes du projet
+│   └── diagramme_*.png
 ├── GUI_GUIDE.md              # Guide utilisateur de l'interface
 ├── QUICK_START.md            # Guide de démarrage
 ├── requirements.txt          # Dépendances Python

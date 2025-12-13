@@ -15,6 +15,7 @@ if %errorlevel% neq 0 (
 echo [OK] Ollama est actif
 echo.
 echo Lancement de l'interface graphique...
+cd ..
 python ocr_gui.py
 
 pause
