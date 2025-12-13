@@ -80,7 +80,7 @@
 % --- En-têtes et pieds de page ---
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small \textit{Ultimate OCR \& LLM Parser v3.3}}
+\fancyhead[L]{\small \textit{Ultimate OCR \& LLM Parser}}
 \fancyhead[R]{\small FST Settat}
 \fancyfoot[C]{\small \thepage}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -119,7 +119,6 @@
                     \centering
                     \LARGE \textbf{\color{primaryColor} RAPPORT DE PROJET} \\[0.8cm]
                     \Huge \textbf{Ultimate OCR \& LLM Parser} \\[0.3cm]
-                    \large \textit{v3.3 - Auto-Detection Enabled}
                 \end{minipage}
             };
         \end{tikzpicture}
@@ -137,7 +136,7 @@
             \begin{flushleft} \large
                 \textbf{Réalisé par :} \\
                 ENNAJI Aymen \\
-                \textit{Étudiant LST GI}
+                ELKETTANI Ahmed \\
             \end{flushleft}
         \end{minipage}
         \hfill
@@ -152,8 +151,6 @@
         \vfill
         
         {\large Année Universitaire : 2025 - 2026} \\
-        \vspace{0.5cm}
-        {\large \today}
         
     \end{center}
 \end{titlepage}
@@ -173,7 +170,6 @@
 % CHAPITRE 1 : INTRODUCTION ET CONTEXTE
 % =============================================================================
 \chapter{Introduction et Contexte}
-\newpage
 
 \section{Problématique générale}
 
@@ -229,7 +225,6 @@ Ce rapport s'articule comme suit :
 % CHAPITRE 2 : ARCHITECTURE ET CONCEPTION
 % =============================================================================
 \chapter{Architecture et Conception}
-\newpage
 
 \section{Vue d'ensemble du pipeline}
 
@@ -238,33 +233,8 @@ Le pipeline du projet suit une architecture modulaire et séquentielle, où chaq
 % --- FIGURE TIKZ AUTOMATIQUE ---
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[node distance=1.5cm, auto]
-        % Styles
-        \tikzstyle{block} = [rectangle, draw, fill=blue!10, text width=3cm, text centered, rounded corners, minimum height=1.2cm, drop shadow]
-        \tikzstyle{decision} = [diamond, draw, fill=green!10, text width=2cm, text centered, inner sep=0pt, drop shadow]
-        \tikzstyle{line} = [draw, -latex', thick]
-        \tikzstyle{cloud} = [draw, ellipse,fill=red!10, node distance=3cm, minimum height=2em]
-
-        % Nodes
-        \node [cloud] (input) {Fichier (PDF/Img)};
-        \node [block, below of=input, node distance=2.5cm] (extractor) {\textbf{Smart Extractor}\\(Auto-switch Markdown/OCR)};
-        \node [decision, below of=extractor, node distance=3cm] (classify) {\textbf{Document Classifier}\\(Heuristics)};
-        \node [block, left of=classify, node distance=4.5cm] (preprocess) {\textbf{Image Processor}\\(OpenCV Deskew)};
-        \node [block, below of=classify, node distance=3.5cm] (llm) {\textbf{LLM Orchestrator}\\(Ollama Llama 3.2)};
-        \node [block, right of=llm, node distance=4.5cm] (regex) {\textbf{Regex Booster}\\(Post-process)};
-        \node [cloud, below of=llm, node distance=2.5cm] (output) {JSON Structuré};
-
-        % Paths
-        \path [line] (input) -- (extractor);
-        \path [line] (extractor) -- (classify);
-        \path [line] (extractor) -- node[above] {Si Image} (preprocess);
-        \path [line] (preprocess) -- (extractor);
-        \path [line] (classify) -- node {Context Injection} (llm);
-        \path [line] (llm) -- (output);
-        \path [line] (llm) -- (regex);
-        \path [line] (regex) -- (output);
-    \end{tikzpicture}
-    \caption{Diagramme de flux de données de l'application OCR v3.3}
+    \includegraphics[width=1.0\textwidth]{diagramme_flux.png}
+    \caption{Diagramme de flux de données (Data Flow) de l'application OCR v3.3}
     \label{fig:pipeline}
 \end{figure}
 
@@ -335,31 +305,12 @@ Le prétraitement d'images améliore significativement la qualité de l'OCR. La 
 \end{enumerate}
 
 Code illustratif :
-\begin{lstlisting}[language=Python, caption={Prétraitement d'image (ImageProcessor)}]
-def preprocess_for_ocr(self, img_pil: Image.Image) -> Image.Image:
-    img = cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2BGR)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    
-    # Détection d'angle via minAreaRect
-    coords = np.column_stack(np.where(gray > 0))
-    angle = cv2.minAreaRect(coords)[-1]
-    if angle < -45: angle = -(90 + angle)
-    else: angle = -angle
-    
-    # Rotation si nécessaire
-    if abs(angle) > 0.5:
-        (h, w) = img.shape[:2]
-        M = cv2.getRotationMatrix2D((w//2, h//2), angle, 1.0)
-        img = cv2.warpAffine(img, M, (w, h),
-            flags=cv2.INTER_CUBIC, 
-            borderMode=cv2.BORDER_REPLICATE)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    # Amélioration du contraste
-    pil_img = Image.fromarray(gray)
-    enhancer = ImageEnhance.Contrast(pil_img)
-    return enhancer.enhance(1.6)
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{screenshots/code1.png}
+    \caption{Prétraitement d'image (ImageProcessor)}
+    \label{fig:code_preprocess}
+\end{figure}
 
 \subsection{DocumentClassifier}
 
@@ -514,7 +465,6 @@ Pour assurer la maintenabilité et l'extensibilité du projet, plusieurs patrons
 % CHAPITRE 3 : MÉTHODOLOGIE DE DÉVELOPPEMENT
 % =============================================================================
 \chapter{Méthodologie de Développement}
-\newpage
 
 \section{Approche générale}
 
@@ -527,64 +477,35 @@ La stratégie d'extraction a été pensée pour être robuste face à la variét
 \subsection{Tentative d'extraction structurée (PyMuPDF4LLM)}
 
 Pour les PDF :
-\begin{lstlisting}[language=Python, caption={Tentative d'extraction Markdown}]
-def _handle_pdf(self, pdf_path: Path) -> str:
-    try:
-        md_text = pymupdf4llm.to_markdown(str(pdf_path))
-        if len(re.sub(r'\s+', '', md_text)) > 50:
-            return f"--- CONTENU MARKDOWN ---\n{md_text}"
-        return self._ocr_fallback(pdf_path)
-    except Exception:
-        return self._ocr_fallback(pdf_path)
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{screenshots/code2.png}
+    \caption{Tentative d'extraction structurée (Markdown)}
+    \label{fig:code_md_extract}
+\end{figure}
 
 \textbf{Avantage} : Si le PDF contient du texte sélectionnable, le Markdown préserve la structure (titres, listes, tableaux) et sera de bien meilleure qualité.
 
 \subsection{Fallback OCR}
 
 Si le Markdown est insuffisant :
-\begin{lstlisting}[language=Python, caption={Fallback OCR pour PDF}]
-def _ocr_fallback(self, pdf_path: Path) -> str:
-    logger.warning("Mode OCR activé (PDF Image)")
-    images = convert_from_path(str(pdf_path), dpi=300)
-    full_text = []
-    for i, img in enumerate(track(images)):
-        processed = self.img_processor.preprocess_for_ocr(img)
-        txt = pytesseract.image_to_string(
-            processed, lang='fra+eng', config='--psm 4')
-        full_text.append(f"## PAGE {i+1}\n{txt}")
-    return "\n".join(full_text)
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{screenshots/code3.png}
+    \caption{Fallback OCR pour PDF (Mode Image)}
+    \label{fig:code_fallback}
+\end{figure}
 
 \section{Ingénierie des prompts et appel LLM}
 
 Le prompt est construit dynamiquement selon le type détecté. Exemple pour un CV :
 
-\begin{lstlisting}[language=Python, caption={Construction du prompt (extrait)}, basicstyle=\ttfamily\scriptsize]
-prompt = f"""
-Analyse ce document MARKDOWN. Type détecté : CV.
-
-OBJECTIF : Extraire les données en JSON strict.
-
-RÈGLES SPÉCIFIQUES :
-- Cherche le profil complet, les compétences techniques précises.
-- Détaille les expériences professionnelles.
-- Normalise les dates au format YYYY-MM-DD.
-
-SCHEMA CIBLE :
-{json.dumps(target_schema, ensure_ascii=False)}
-
-DOCUMENT :
-{text[:25000]}
-"""
-
-response = ollama.generate(
-    model=self.model,
-    prompt=prompt,
-    format="json",
-    options={"temperature": 0.0, "num_ctx": 8192}
-)
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{screenshots/code4.png}
+    \caption{Appel LLM avec prompt dynamique et schéma JSON}
+    \label{fig:code_llm}
+\end{figure}
 
 \textbf{Optimisation clé} : Un seul appel LLM demande à la fois correction OCR ET extraction JSON. Cela réduit la latence par rapport à une approche en deux phases.
 
@@ -604,7 +525,6 @@ Cela garantit qu'une erreur partielle n'arrête pas l'ensemble du traitement bat
 % CHAPITRE 4 : RÉSULTATS ET ANALYSE
 % =============================================================================
 \chapter{Résultats et Analyse}
-\newpage
 
 \section{Évaluation qualitative}
 
@@ -657,8 +577,8 @@ Estimations sur machine moderne (CPU 4-core, 8GB RAM, pas GPU) :
         Extraction Markdown (PDF natif) & 0.5-1 & très rapide \\
         Conversion PDF → Images & 2-5 & DPI 300, multi-pages \\
         OCR Tesseract (1 page) & 1-3 & dépend de résolution \\
-        Appel LLM (Ollama local) & 3-15 & dépend du modèle et charge \\
-        Total (1 document 3 pages) & 8-25 & estimé \\
+        Appel LLM (Ollama local) & 15-20 & dépend du modèle et charge \\
+        Total (1 document 3 pages) & 25-40 & estimé \\
         \hline
     \end{tabular}
     \caption{Estimations de temps par étape}
@@ -709,7 +629,6 @@ Le LLM corrige efficacement les erreurs courantes :
 % CHAPITRE 5 : INTERFACE GRAPHIQUE
 % =============================================================================
 \chapter{Interface Graphique Utilisateur}
-\newpage
 
 \section{Motivation et objectifs}
 
@@ -766,23 +685,17 @@ L'interface graphique utilise \textbf{CustomTkinter}, un framework Python modern
 
 \subsection{Architecture de classe}
 
-L'application GUI est implémentée dans la classe \texttt{OCRApp} qui hérite de \texttt{ctk.CTk} et \texttt{TkinterDnD.DnDWrapper} :
+L'application GUI est implémentée dans la classe \texttt{OCRApp} qui hérite de 
+\texttt{ctk.CTk} et 
+\newline
+\texttt{TkinterDnD.DnDWrapper} :
 
-\begin{lstlisting}[language=Python, caption={Architecture de la classe OCRApp}]
-class OCRApp(ctk.CTk, TkinterDnD.DnDWrapper):
-    def __init__(self):
-        super().__init__()
-        self.title("Ultimate OCR & LLM Parser")
-        self.geometry("1200x800")
-        
-        # Variables d'etat
-        self.selected_file = None
-        self.processing = False
-        self.result_data = None
-        
-        # Creation de l'interface
-        self._create_widgets()
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{screenshots/code5.png}
+    \caption{Architecture de la classe OCRApp}
+    \label{fig:code_ocrapp}
+\end{figure}
 
 \textbf{Principes de conception} :
 \begin{enumerate}
@@ -841,72 +754,23 @@ Le flux d'utilisation typique se déroule en 5 étapes :
 
 Pour éviter le gel de l'interface pendant le traitement (qui peut durer 10-30 secondes), le code utilise le module \texttt{threading} :
 
-\begin{lstlisting}[language=Python, caption={Traitement asynchrone}]
-def _process_document(self):
-    if self.processing:
-        return
-    
-    self.processing = True
-    self.process_btn.configure(state="disabled")
-    
-    # Lancer dans un thread separe
-    thread = threading.Thread(target=self._run_ocr)
-    thread.daemon = True
-    thread.start()
-    
-    # Animation de la progress bar
-    self._animate_progress()
-
-def _run_ocr(self):
-    try:
-        # Extraction
-        self._update_status("Extraction du texte...")
-        extractor = SmartExtractor()
-        raw_text = extractor.extract(self.selected_file)
-        
-        # Detection
-        self._update_status("Detection du type...")
-        # ... suite du traitement
-        
-    except Exception as e:
-        self._update_status(f"Erreur : {str(e)}", "#f44336")
-    finally:
-        self.processing = False
-\end{lstlisting}
-
-\subsection{Mise à jour thread-safe de l'UI}
-
-Les mises à jour de l'interface depuis le thread worker utilisent \texttt{self.after()} :
-
-\begin{lstlisting}[language=Python, caption={Communication thread-safe}]
-def _update_status(self, message, color="#2196f3"):
-    """Mettre a jour le status (thread-safe)"""
-    self.after(0, lambda: 
-        self.status_label.configure(
-            text=message, 
-            text_color=color
-        )
-    )
-\end{lstlisting}
-
-Cette technique garantit que les modifications du DOM GUI se font toujours dans le thread principal, évitant les erreurs de concurrence.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{screenshots/code6.png}
+    \caption{Traitement asynchrone (Threading)}
+    \label{fig:code_threading}
+\end{figure}
 
 \subsection{Gestion du drag \& drop}
 
 L'intégration de TkinterDnD2 permet un glisser-déposer natif :
 
-\begin{lstlisting}[language=Python, caption={Configuration drag \& drop}]
-# Configuration Drag & Drop
-self.drop_frame.drop_target_register(DND_FILES)
-self.drop_frame.dnd_bind('<<Drop>>', self._on_drop)
-
-def _on_drop(self, event):
-    file_path = event.data
-    # Nettoyer le chemin (enlever les accolades)
-    if file_path.startswith('{') and file_path.endswith('}'):
-        file_path = file_path[1:-1]
-    self._load_file(file_path)
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{screenshots/code7.png}
+    \caption{Configuration Drag \& Drop}
+    \label{fig:code_drag_drop}
+\end{figure}
 
 \section{Avantages de l'interface graphique}
 
@@ -1015,7 +879,7 @@ L'interface graphique actuelle est fonctionnelle et complète, mais plusieurs am
 % CHAPITRE 6 : AMÉLIORATIONS FUTURES
 % =============================================================================
 \chapter{Améliorations Futures}
-\newpage
+
 \section{Court terme (1-2 mois)}
 
 \begin{enumerate}
@@ -1047,7 +911,7 @@ L'interface graphique actuelle est fonctionnelle et complète, mais plusieurs am
 % CHAPITRE 6 : CONCLUSION
 % =============================================================================
 \chapter{Conclusion}
-\newpage
+
 \section{Synthèse des réalisations}
 
 Le projet ``Ultimate OCR \& LLM Parser (v3.3)'' a démontré la viabilité d'une approche hybride combinant extraction OCR classique, prétraitement d'images, classification heuristique et post-traitement par modèle de langage de grande taille. Les points clés réalisés sont :
@@ -1071,7 +935,7 @@ Sur le plan technique, le projet contribue :
     \item Une architecture modulaire de pipeline extensible et maintenable.
     \item Une stratégie de correction des erreurs OCR par règles heuristiques + approches neuronales.
 \end{enumerate}
-
+\newpage
 \section{Limitations et recommandations}
 
 Limitations identifiées et recommandations associées :
@@ -1095,7 +959,6 @@ Limitations identifiées et recommandations associées :
     \caption{Limitations et recommandations}
     \label{tab:limitations}
 \end{table}
-\newpage
 \section{Perspectives}
 
 Ce projet ouvre plusieurs directions de recherche et développement :
@@ -1137,15 +1000,19 @@ python ocr_extractor.py input/facture.pdf --type facture --model llama3.2
 
 \begin{verbatim}
 projet_ocr_fst/
-├── ocr_extractor.py          # Script principal
-├── requirements.txt          # Dépendances
-├── README.md                 # Documentation basique
-├── PRESENTATION_PROJET.md    # Présentation détaillée
-├── rapport.tex              # Ce rapport
-├── input/                   # Documents d'entrée
-└── output/                  # JSON structurés générés
-    ├── CV_Aymen_Ennaji_data.json
-    ├── modele_de_facture_data.json
+├── ocr_gui.py                # APPLICATION PRINCIPALE (Interface Graphique)
+├── ocr_extractor.py          # Moteur backend d'extraction et IA
+├── start_gui.bat             # Script de lancement rapide
+├── build_exe.bat             # Script de compilation en .exe
+├── presentation.tex          # Présentation Beamer (Slides)
+├── rapport_v2_fixed.tex      # Rapport complet LaTeX
+├── GUI_GUIDE.md              # Guide utilisateur de l'interface
+├── QUICK_START.md            # Guide de démarrage
+├── requirements.txt          # Dépendances Python
+├── input/                    # Dossier pour vos documents
+│   └── (Vos PDF/Images)
+└── output/                   # Résultats JSON générés
+    ├── mon_cv_data.json
     └── ...
 \end{verbatim}
 

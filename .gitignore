@@ -43,3 +43,16 @@ rapport.tex
 *.lof
 *.lot
 *.pdf
+*.gls
+*.defs
+*.ist
+*.glo
+*.pkg
+*.nav
+*.snm
+
+# User Exclusions (Assets & Tools)
+screenshots/
+schemas_pres/
+tools/
+*.png

@@ -1,0 +1,326 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% --- THEME & COULEURS ---
+\usetheme{metropolis}
+\metroset{progressbar=frametitle}
+\metroset{block=fill}
+
+% Couleurs personnalisées (FST Settat Blue)
+\definecolor{myblue}{HTML}{003366}
+\definecolor{myred}{HTML}{A30000}
+\definecolor{mygrey}{HTML}{F0F0F0}
+
+\setbeamercolor{palette primary}{bg=myblue, fg=white}
+\setbeamercolor{frametitle}{bg=myblue, fg=white}
+\setbeamercolor{progress bar}{fg=myred, bg=mygrey}
+\setbeamercolor{alerted text}{fg=myred}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+% --- INFO PROJET ---
+\title{Extraction et Analyse Intelligente de Documents}
+\subtitle{Ultimate OCR \& LLM Parser v3.3}
+\author{Aymen Ennaji}
+\institute{FST Settat}
+\date{\today}
+
+\begin{document}
+
+% -----------------------------------------------------------------------------
+% SLIDE DE TITRE
+% -----------------------------------------------------------------------------
+\maketitle
+
+% -----------------------------------------------------------------------------
+% SOMMAIRE
+% -----------------------------------------------------------------------------
+\begin{frame}{Sommaire}
+    \setbeamertemplate{section in toc}[sections numbered]
+    \tableofcontents
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% SECTION 1: INTRODUCTION
+% -----------------------------------------------------------------------------
+\section{Introduction}
+
+\begin{frame}{Contexte et Problématique}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Le Contexte :}
+        \begin{itemize}
+            \item Augmentation massive des documents numériques (PDF, Images).
+            \item Besoin d'automatisation dans les entreprises.
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \begin{alertblock}{Le Problème}
+        Les outils classiques (grep, regex) sont inefficaces sur des documents non structurés (scans, factures variées).
+        \end{alertblock}
+    \end{columns}
+
+    \vspace{0.5cm}
+    \textbf{Notre Objectif :}
+    Créer une solution \textbf{hybride} alliant OCR (Vision) et LLM (Intelligence) pour structurer n'importe quel document.
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% SECTION 2: ARCHITECTURE
+% -----------------------------------------------------------------------------
+\section{Architecture Système}
+
+\begin{frame}{Technologies Utilisées}
+    Une stack technologique moderne et robuste :
+    
+    \begin{itemize}
+        \item \textbf{Langage} : Python 3.11 \includegraphics[height=0.4cm]{example-image-a} % Placeholder iconic if needed
+        \item \textbf{Moteur OCR} : Tesseract (Google) + Poppler
+        \item \textbf{Intelligence Artificielle} : Ollama (Llama 3.2 / Mistral) en local
+        \item \textbf{Interface Graphique} : CustomTkinter (Moderne)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Diagramme de Classes (UML)}
+    \begin{center}
+        \includegraphics[height=0.8\textheight]{diagramme_classes.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Flux de Traitement}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Étapes Clés :}
+        \begin{enumerate}
+            \item \textbf{Input} : Chargement PDF/Img.
+            \item \textbf{Smart Ext.} : Décision Native vs OCR.
+            \item \textbf{Classif.} : Détection type doc.
+            \item \textbf{LLM} : Structuration JSON.
+        \end{enumerate}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{diagramme_flux.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Stratégie : Prétraitement d'Image}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Optimisation OCR :}
+        \begin{itemize}
+            \item Conversion Grayscale.
+            \item \textbf{Deskew} : Correction auto de l'inclinaison.
+            \item Renforcement du contraste (+60\%).
+        \end{itemize}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_preprocess.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Stratégie : Logique de Fallback}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Approche Hybride :}
+        \begin{itemize}
+            \item \textbf{Priorité} : Extraction native (Markdown) si possible.
+            \item \textbf{Fallback} : Bascule vers OCR Tesseract si scan détecté.
+            \item Garantit qualité vs robustesse.
+        \end{itemize}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_fallback.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Intelligence Artificielle (LLM)}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Construction du Prompt :}
+        \begin{itemize}
+            \item Injection du \textbf{Schéma JSON} cible.
+            \item Ajout des règles métier spécifiques.
+            \item Combinaison avec le texte brut extrait.
+            \item Inférence locale sur Ollama.
+        \end{itemize}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_llm.png}
+    \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% SECTION 3: DESIGN & CONCEPTION
+% -----------------------------------------------------------------------------
+\section{Conception Détaillée}
+
+\begin{frame}{Diagramme de Séquence}
+    Illustration du workflow multi-thread :
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{diagramme_sequence.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Design Patterns}
+    \begin{block}{Patterns Clés}
+    \begin{itemize}
+        \item \textbf{Facade} : \texttt{OCRApp} centralise la complexité.
+        \item \textbf{Strategy} : Bascule automatique Native $\leftrightarrow$ OCR.
+        \item \textbf{Observer} : Callbacks pour la mise à jour de l'UI (Progression).
+        \item \textbf{Worker Thread} : UI non bloquante durant le traitement lourd.
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Architecture Logicielle}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Structure 3-Tiers :}
+        \begin{itemize}
+            \item \textbf{Présentation} : GUI CustomTkinter.
+            \item \textbf{Domaine} : Orchestrateur OCR et Logique métier.
+            \item \textbf{Infra} : Wrappers Tesseract et Ollama.
+        \end{itemize}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_arch.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Modèle Asynchrone}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Non-bloquant :}
+        \begin{itemize}
+            \item Thread UI principal fluide.
+            \item \textbf{Worker Thread} pour tâches lourdes (OCR/IA).
+            \item Callbacks \texttt{after()} pour mise à jour UI safe.
+        \end{itemize}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_threading.png}
+    \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% SECTION 4: RÉSULTATS & DÉMO
+% -----------------------------------------------------------------------------
+\section{Interface & Démonstration}
+
+\begin{frame}{Interface Graphique (GUI)}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Fonctionnalités :}
+        \begin{itemize}
+            \item Drag \& Drop intuitif.
+            \item Barre de progression réelle.
+            \item Logs en temps réel.
+            \item Export JSON.
+        \end{itemize}
+        
+        \column{0.6\textwidth}
+        % Placeholder for a screenshot if user takes one, otherwise descriptive text
+        \begin{center}
+            \Huge \textbf{LIVE DEMO}
+            
+            \large Lancement de l'application...
+        \end{center}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Mécanisme Drag \& Drop}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Expérience Utilisateur :}
+        \begin{itemize}
+            \item Support natif OS (Windows/Mac).
+            \item Événement \texttt{<<Drop>>} capturé par TkinterDnD.
+            \item Chargement instantané du fichier.
+        \end{itemize}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_dnd.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Comparatif Performance}
+    \begin{table}
+        \centering
+        \begin{tabular}{lcc}
+            \toprule
+            \textbf{Critère} & \textbf{Approche Classique} & \textbf{Notre Solution} \\
+            \midrule
+            Format & Structuré uniquement & Tout (Scan/PDF/Img) \\
+            Précision & Faible (OCR brut) & \textbf{Élevée (OCR + LLM Correction)} \\
+            Sortie & Texte brut & \textbf{JSON Structuré} \\
+            Confidentialité & Cloud (Souvent) & \textbf{100\% Local} \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Schémas de Sortie : CV}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Extraction Candidat :}
+        \begin{itemize}
+            \item Identité et Contacts.
+            \item Compétences techniques.
+            \item Expériences et Formations structurées.
+        \end{itemize}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{screenshots/code_schema_cv.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Schémas de Sortie : Facture}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \textbf{Extraction Comptable :}
+        \begin{itemize}
+            \item Émetteur / Client.
+            \item Lignes d'articles (Tableaux).
+            \item Totaux HT, TVA, TTC.
+        \end{itemize}
+
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth]{screenshots/code_schema_facture.png}
+    \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% SECTION 5: CONCLUSION
+% -----------------------------------------------------------------------------
+\section{Conclusion}
+
+\begin{frame}{Bilan et Perspectives}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Réalisations $\checkmark$}
+        \begin{itemize}
+            \item Pipeline complet OCR + LLM.
+            \item Application GUI moderne et packaging .exe.
+            \item Précision > 95\% sur les tests.
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{Perspectives $\rightarrow$}
+        \begin{itemize}
+            \item Traitement par lot (Batch).
+            \item Support de Tableaux complexes.
+            \item API REST (FastAPI).
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{1cm}
+    \centering
+    \Large \textbf{Merci de votre attention !}
+\end{frame}
+
+\end{document}

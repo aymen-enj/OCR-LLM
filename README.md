@@ -1,143 +1,107 @@
-
 # Ultimate OCR & LLM Parser (v3.3)
 
-Ce projet permet d'extraire et de structurer automatiquement le texte de fichiers PDF ou images (PNG, JPG, etc.) grâce à l'OCR (Tesseract) et à un post-traitement intelligent avec un LLM local (Ollama). Il détecte le type de document (CV, facture, formulaire, générique) et génère un JSON structuré adapté.
+This project automatically extracts and structures text from PDF files or images (PNG, JPG, etc.) using Tesseract OCR and intelligent post-processing with a local LLM (Ollama). It detects the document type (Resume/CV, Invoice, Form, Generic) and generates an adapted structured JSON output.
 
+## Prerequisites
 
-## Prérequis
+1.  **Tesseract OCR**
+    *   Windows: [Download here](https://github.com/UB-Mannheim/tesseract/wiki)
+    *   Linux: `sudo apt-get install tesseract-ocr`
+    *   macOS: `brew install tesseract`
+    *   *Note: Ensure the installation path is correct or update it in the script if necessary.*
 
-1. **Tesseract OCR**
-   - Windows : [Installer ici](https://github.com/UB-Mannheim/tesseract/wiki)
-   - Linux : `sudo apt-get install tesseract-ocr tesseract-ocr-fra`
-   - macOS : `brew install tesseract tesseract-lang`
-   - Vérifiez le chemin d'installation ou modifiez-le dans le script si besoin.
+2.  **Ollama**
+    *   [Install Ollama](https://ollama.ai/download)
+    *   Start Ollama and pull a model: `ollama pull llama3.2`
 
-2. **Ollama**
-   - [Installer Ollama](https://ollama.ai/download)
-   - Démarrer Ollama et télécharger un modèle : `ollama pull llama3.2`
+3.  **Python 3.11+**
+    *   Create a virtual environment: `python -m venv venv`
+    *   Activate it:
+        *   Windows: `venv\Scripts\activate`
+        *   Linux/macOS: `source venv/bin/activate`
+    *   Install dependencies: `pip install -r requirements.txt`
 
-3. **Python 3.x**
-   - Créez un environnement virtuel : `python -m venv venv`
-   - Activez-le :
-     - Windows : `venv\Scripts\activate`
-     - Linux/macOS : `source venv/bin/activate`
-   - Installez les dépendances : `pip install -r requirements.txt`
+## Usage
 
+### 🎨 GUI Interface (Recommended)
 
-## Utilisation
-
-### 🎨 Interface Graphique (Recommandé)
-
-Lancez l'interface graphique moderne :
+Launch the modern graphical interface:
 ```bash
 python ocr_gui.py
 ```
+Or simply run `start_gui.bat` on Windows.
 
-**Fonctionnalités :**
-- ✨ Glisser-déposer de fichiers
-- 🎯 Sélection intuitive du type et du modèle
-- 📊 Affichage en temps réel des résultats
-- 💾 Export et copie faciles
+**Features:**
+*   ✨ Drag & Drop support
+*   🎯 Intuitive document type and model selection
+*   📊 Real-time processing logs
+*   💾 Easy JSON export and copy
 
-Consultez [GUI_GUIDE.md](file:///c:/Users/aymen/OneDrive/Desktop/projet_ocr_fst/GUI_GUIDE.md) pour plus de détails.
+### 💻 Command Line (CLI)
 
-### 💻 Ligne de Commande
-
-## Utilisation
-
-
-### Extraction et structuration automatique
+**Basic Extraction:**
 ```bash
-python ocr_extractor.py input/mon_document.pdf
+python ocr_extractor.py input/my_document.pdf
 ```
 
-### Options principales
-- Forcer le type de document :
-   ```bash
-   python ocr_extractor.py input/cv.pdf --type cv
-   python ocr_extractor.py input/facture.pdf --type facture
-   python ocr_extractor.py input/formulaire.pdf --type formulaire
-   ```
-- Spécifier le modèle Ollama :
-   ```bash
-   python ocr_extractor.py input/document.pdf --model llama3.2
-   python ocr_extractor.py input/document.pdf --model mistral
-   ```
-- Changer le dossier de sortie :
-   ```bash
-   python ocr_extractor.py input/image.png --output output
-   ```
+**Advanced Options:**
+*   **Force Document Type:**
+    ```bash
+    python ocr_extractor.py input/resume.pdf --type cv
+    python ocr_extractor.py input/invoice.pdf --type facture
+    ```
+*   **Specify LLM Model:**
+    ```bash
+    python ocr_extractor.py input/doc.pdf --model llama3.2
+    ```
+*   **Custom Output Directory:**
+    ```bash
+    python ocr_extractor.py input/img.png --output my_results
+    ```
 
-
-## Structure du projet
+## Project Structure
 
 ```
 projet_ocr_fst/
 │
-├── ocr_extractor.py      # Script principal
-├── requirements.txt      # Dépendances Python
+├── ocr_extractor.py      # Core Logic (OCR + LLM)
+├── ocr_gui.py            # GUI Application (CustomTkinter)
+├── requirements.txt      # Python Dependencies
 ├── README.md             # Documentation
-├── PRESENTATION_PROJET.md# Présentation détaillée
-├── input/                # Fichiers d'entrée
-└── output/               # Fichiers de sortie (JSON structuré)
-   ├── nom_fichier_data.json        # Résultat final structuré
-   └── ...
+├── tools/                # Generation Scripts (Schemas/Images)
+├── input/                # Source Documents
+└── output/               # Structured Results (JSON)
 ```
 
+## Supported Formats
+*   **PDF** (Multi-page support)
+*   **Images**: PNG, JPG, JPEG, BMP, TIFF
 
-## Formats supportés
-- PDF (multi-pages)
-- Images : PNG, JPG, JPEG
+## Key Features
+*   **Hybrid Extraction**: Native PDF text extraction with automatic fallback to OCR (Tesseract) for scans.
+*   **Smart Classification**: Keywords-based heuristic to detect document type.
+*   **LLM Parsing**: Uses local AI (Llama 3.2 via Ollama) to clean, correct, and structure raw text.
+*   **Structured JSON**: guaranteed output schema for Resumes, Invoices, etc.
+*   **100% Local**: No data is sent to the cloud.
 
+## JSON Examples
 
-## Fonctionnalités principales
-
-- Extraction OCR multi-format (PDF, images)
-- Détection automatique du type de document (CV, facture, formulaire, générique)
-- Structuration intelligente des données avec LLM (Ollama)
-- Export JSON structuré selon le type détecté
-- Correction et enrichissement des données (emails, téléphones, IBAN, etc.)
-
-### Structure JSON générée
-
-#### CV
+###  Resume (CV)
 ```json
 {
-   "candidat": {"nom": "...", "email": "...", "telephone": "...", "liens": [...]},
-   "profil_synthese": "...",
-   "competences": {"langages": [...], "outils": [...], "soft_skills": [...]},
-   "experience": [{"poste": "", "entreprise": "", "dates": "", "missions": [...]}],
-   "education": [{"diplome": "", "ecole": "", "annee": ""}]
+   "candidat": {"nom": "John Doe", "email": "john@example.com", "telephone": "+123456789"},
+   "competences": {"langages": ["Python", "C++"], "outils": ["Git", "Docker"]},
+   "experience": [{"poste": "Senior Dev", "entreprise": "TechCorp", "dates": "2020-2023"}]
 }
 ```
 
-#### Facture
+### Invoice (Facture)
 ```json
 {
-   "document": {"type": "Facture", "numero": "", "date_emission": ""},
-   "emetteur": {"nom": "", "adresse": "", "siret": "", "iban": ""},
-   "client": {"nom": "", "adresse": ""},
-   "articles": [{"description": "", "qte": 0, "prix_unitaire": 0, "total_ligne": 0}],
-   "totaux": {"total_ht": 0.0, "total_tva": 0.0, "total_ttc": 0.0, "devise": "EUR/USD/MAD"}
+   "document": {"numero": "INV-2023-001", "date_emission": "2023-10-25"},
+   "totaux": {"total_ht": 1000.0, "total_tva": 200.0, "total_ttc": 1200.0}
 }
 ```
 
-#### Formulaire
-```json
-{
-   "titre_formulaire": "",
-   "champs_reemplis": [{"label": "...", "valeur": "..."}],
-   "cases_cochees": ["..."],
-   "blocs_texte_libre": [...],
-   "statut_signature": "Signé / Non Signé"
-}
-```
-
-
-## Notes importantes
-- La détection du type de document est automatique par défaut (`--type auto`)
-- Le script convertit chaque page PDF en image si besoin (OCR fallback)
-- La qualité dépend du document source
-- Ollama doit être lancé avant d'utiliser le script
-- Les résultats sont sauvegardés en JSON dans le dossier `output/`
-
+---
+*Project developed for FST Settat - Ultimate OCR & LLM Parser v3.3*
