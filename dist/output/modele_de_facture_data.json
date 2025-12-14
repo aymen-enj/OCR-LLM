@@ -1,0 +1,37 @@
+{
+  "document": {
+    "type": "Facture/Devis",
+    "numero": "552",
+    "date_emission": "12/07/2021"
+  },
+  "emetteur": {
+    "nom": "[Nom de l'entreprise du client]",
+    "adresse": "[Adresse de l'entreprise du client]",
+    "siret": "[SIRET du client]",
+    "iban": "[IBAN du client]"
+  },
+  "client": {
+    "nom": "[Nom de l'entreprise du client]",
+    "adresse": "[Adresse de l'entreprise du client]"
+  },
+  "articles": [
+    {
+      "description": "mon produit",
+      "qte": 2,
+      "prix_unitaire": 50.0,
+      "total_ligne": 100.0
+    },
+    {
+      "description": "mon service",
+      "qte": 3,
+      "prix_unitaire": 100.0,
+      "total_ligne": 300.0
+    }
+  ],
+  "totaux": {
+    "total_ht": 0.0,
+    "total_tva": 80.0,
+    "total_ttc": 480.0,
+    "devise": "EUR"
+  }
+}

@@ -56,3 +56,6 @@ screenshots/
 schemas_pres/
 tools/
 *.png
+
+# Presentation Script (Private)
+PRESENTATION_SCRIPT.md

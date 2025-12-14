@@ -1,0 +1,89 @@
+{
+  "titre_formulaire": "Formulaire de préinscription 2025/2026",
+  "champs_reemplis": [
+    {
+      "label": "Ex: Nom",
+      "valeur": "ENNAJI"
+    },
+    {
+      "label": "Ex: Prénom",
+      "valeur": "AYMEN"
+    },
+    {
+      "label": "Date de naissance",
+      "valeur": "22/06/2005"
+    },
+    {
+      "label": "Lieu de naissance",
+      "valeur": "Casablanca"
+    },
+    {
+      "label": "Sexe",
+      "valeur": "<br>Homme"
+    },
+    {
+      "label": "CNIE",
+      "valeur": "BW47056"
+    },
+    {
+      "label": "Adresse personnelle",
+      "valeur": "Hay al andalous 3, Rue 25, N 100, Casablanca, Casablanca"
+    },
+    {
+      "label": "Téléphone 1",
+      "valeur": "0626424451"
+    },
+    {
+      "label": "E-mail",
+      "valeur": "aymenennaji5@gmail.com"
+    },
+    {
+      "label": "CNE",
+      "valeur": "R138876080"
+    },
+    {
+      "label": "Année du baccalauréat",
+      "valeur": "2023"
+    },
+    {
+      "label": "Diplôme BAC+2 ou équivalent",
+      "valeur": "BTS"
+    },
+    {
+      "label": "Ville d'obtention du diplôme <br>BAC+2",
+      "valeur": "Casablanca"
+    },
+    {
+      "label": "Année d'obtention du diplôme <br>BAC+2",
+      "valeur": "2025"
+    },
+    {
+      "label": "Spécialité du diplôme BAC+2",
+      "valeur": "INFORMATIQUE"
+    },
+    {
+      "label": "Nom d'établissement d'obtention <br>du diplôme BAC+2",
+      "valeur": "BTS Al-Kendi"
+    },
+    {
+      "label": "Moyenne 1ère année",
+      "valeur": "17,07<br>17,07"
+    },
+    {
+      "label": "Moyenne 2ème année",
+      "valeur": "16,91<br>16,91"
+    }
+  ],
+  "cases_cochees": [
+    "Liste des labels des cases cochées (ex: 'Sexe M')",
+    "Copie de la Carte Nationale d’Identité (CNI) Recto-verso",
+    "Copie du diplôme du Baccalauréat",
+    "Copie du diplôme Baccalauréat+2",
+    "Copie de relevé de notes S1",
+    "Copie de relevé de notes S2",
+    "Copie de relevé de notes S3",
+    "Copie de relevé de notes S4"
+  ],
+  "blocs_texte_libre": [],
+  "statut_signature": "Signé / Non Signé"
+}

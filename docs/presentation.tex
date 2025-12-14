@@ -28,14 +28,98 @@
 \subtitle{Ultimate OCR \& LLM Parser v3.3}
 \author{Aymen Ennaji}
 \institute{FST Settat}
-\date{\today}
+\date{} % Date supprimée
+
+% --- CUSTOM TITLE PAGE ---
+% --- CUSTOM TITLE PAGE ---
+% --- CUSTOM TITLE PAGE ---
+\setbeamertemplate{title page}{
+    \begin{center}
+        % 1. On remonte moins fort (ou pas du tout) pour laisser de la place en haut
+        \vspace{0.4cm} 
+        
+        % 2. En-tête avec alignement vertical centré [c]
+        \begin{columns}[c]
+            
+            % --- IMAGE GAUCHE ---
+            \column{0.20\textwidth} % Un peu plus de place pour l'image
+            \centering
+            % IMPORTANT : On fixe la HAUTEUR (height) pour s'aligner sur le texte
+            \includegraphics[height=1.3cm, keepaspectratio]{609-6094376_uh1.png}
+            
+            % --- TEXTE CENTRAL ---
+            \column{0.60\textwidth}
+            \centering
+            {\scriptsize \textbf{ROYAUME DU MAROC} \\ Université Hassan 1\textsuperscript{er} \\ Faculté des Sciences et Techniques de Settat}
+            
+            % --- IMAGE DROITE ---
+            \column{0.20\textwidth}
+            \centering
+            \includegraphics[height=1.5cm, keepaspectratio]{logo-fst.png}
+            
+        \end{columns}
+        
+        \vspace{0.2cm}
+        \hrule height 0.5pt
+        \vspace{0.3cm}
+        
+        % ... LE RESTE NE CHANGE PAS ...
+        
+        % CONTEXTE ACADÉMIQUE
+        {\scriptsize \textsc{Filière : LST Génie Informatique (LST GI)}} \\
+        \vspace{0.1cm}
+        {\scriptsize \textsc{Module : Architecture des Ordinateurs}}
+        
+        \vspace{0.3cm}
+        
+        % TITRE DU PROJET
+        \begin{beamercolorbox}[sep=6pt,center]{title}
+            \usebeamerfont{title} \Large \textbf{Extraction et Analyse} \\ 
+            \vspace{0.1cm}
+            \Large \textbf{Intelligente de Documents}
+        \end{beamercolorbox}
+        
+        \vspace{0.1cm}
+        {\usebeamerfont{subtitle} \small \textit{Ultimate OCR \& LLM Parser}}
+        
+        \vspace{0.1cm} % Un peu plus d'espace avant les noms
+        
+        % AUTEURS ET ENCADRANT
+        \begin{columns}[t]
+            \column{0.5\textwidth}
+            \centering
+            \textbf{\scriptsize \textsc{Réalisé par :}} \\
+            \vspace{0.1cm}
+            {\small ENNAJI Aymen} \\
+            {\small ELKETTANI Ahmed}
+            
+            \column{0.5\textwidth}
+            \centering
+            \textbf{\scriptsize \textsc{Encadré par :}} \\
+            \vspace{0.1cm}
+            {\small Pr. Hicham BENALLA}
+        \end{columns}
+        
+        \vspace{0.3cm}
+        \hrule height 0.5pt
+        \vspace{0.2cm}
+        
+        % PIED DE PAGE
+        {\scriptsize Année Universitaire : \textbf{2025 - 2026}}
+    \end{center}
+}
 
 \begin{document}
 
 % -----------------------------------------------------------------------------
 % SLIDE DE TITRE
 % -----------------------------------------------------------------------------
-\maketitle
+{
+\setbeamertemplate{footline}{} 
+\begin{frame}
+    \titlepage
+\end{frame}
+}
 
 % -----------------------------------------------------------------------------
 % SOMMAIRE
@@ -79,7 +163,7 @@
     Une stack technologique moderne et robuste :
     
     \begin{itemize}
-        \item \textbf{Langage} : Python 3.11 \includegraphics[height=0.4cm]{example-image-a} % Placeholder iconic if needed
+        \item \textbf{Langage} : Python 3.11 
         \item \textbf{Moteur OCR} : Tesseract (Google) + Poppler
         \item \textbf{Intelligence Artificielle} : Ollama (Llama 3.2 / Mistral) en local
         \item \textbf{Interface Graphique} : CustomTkinter (Moderne)
@@ -88,7 +172,7 @@
 
 \begin{frame}{Diagramme de Classes (UML)}
     \begin{center}
-        \includegraphics[height=0.8\textheight]{../diagrams/diagramme_classes.png}
+        \includegraphics[height=0.9\textheight]{diagramme_classes.png}
     \end{center}
 \end{frame}
 
@@ -104,7 +188,7 @@
         \end{enumerate}
 
         \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../diagrams/diagramme_flux.png}
+        \includegraphics[width=\textwidth]{diagramme_flux.png}
     \end{columns}
 \end{frame}
 
@@ -118,8 +202,8 @@
             \item Renforcement du contraste (+60\%).
         \end{itemize}
 
-        \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../schemas_pres/schema_preprocess.png}
+        \column{0.5\textwidth}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_preprocess.png}
     \end{columns}
 \end{frame}
 
@@ -134,7 +218,7 @@
         \end{itemize}
 
         \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../schemas_pres/schema_fallback.png}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_fallback.png}
     \end{columns}
 \end{frame}
 
@@ -150,7 +234,7 @@
         \end{itemize}
 
         \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../schemas_pres/schema_llm.png}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_llm.png}
     \end{columns}
 \end{frame}
 
@@ -162,7 +246,7 @@
 \begin{frame}{Diagramme de Séquence}
     Illustration du workflow multi-thread :
     \begin{center}
-        \includegraphics[width=0.9\textwidth]{../diagrams/diagramme_sequence.png}
+        \includegraphics[width=0.6\textwidth]{diagramme_sequence.png}
     \end{center}
 \end{frame}
 
@@ -188,7 +272,7 @@
         \end{itemize}
 
         \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../schemas_pres/schema_arch.png}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_arch.png}
     \end{columns}
 \end{frame}
 
@@ -203,7 +287,7 @@
         \end{itemize}
 
         \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../schemas_pres/schema_threading.png}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_threading.png}
     \end{columns}
 \end{frame}
 
@@ -218,7 +302,6 @@
         \textbf{Fonctionnalités :}
         \begin{itemize}
             \item Drag \& Drop intuitif.
-            \item Barre de progression réelle.
             \item Logs en temps réel.
             \item Export JSON.
         \end{itemize}
@@ -244,7 +327,7 @@
         \end{itemize}
 
         \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../schemas_pres/schema_dnd.png}
+        \includegraphics[width=\textwidth]{schemas_pres/schema_dnd.png}
     \end{columns}
 \end{frame}
 
@@ -274,8 +357,8 @@
             \item Expériences et Formations structurées.
         \end{itemize}
 
-        \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../screenshots/code_schema_cv.png}
+        \column{0.4\textwidth}
+        \includegraphics[width=\textwidth]{screenshots/code_schema_cv.png}
     \end{columns}
 \end{frame}
 
@@ -290,7 +373,7 @@
         \end{itemize}
 
         \column{0.6\textwidth}
-        \includegraphics[width=\textwidth]{../screenshots/code_schema_facture.png}
+        \includegraphics[width=\textwidth]{screenshots/code_schema_facture.png}
     \end{columns}
 \end{frame}
 

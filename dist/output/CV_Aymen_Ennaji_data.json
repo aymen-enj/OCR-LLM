@@ -1,0 +1,73 @@
+{
+  "candidat": {
+    "nom": "Ennaji Aymen",
+    "email": "aymenennaji5@gmail.com",
+    "telephone": "0626424451",
+    "liens": [
+      "https://github.com/aymen-enj",
+      "https://www.linkedin.com/in/aymen-ennaji"
+    ]
+  },
+  "profil_synthese": "Développeur Web & Systèmes d'Information",
+  "competences": {
+    "langages": [
+      "PHP",
+      "C",
+      "Java",
+      "VB.NET"
+    ],
+    "outils": [
+      "Git",
+      "JWT",
+      "OCR",
+      "Gestion de Projet"
+    ],
+    "soft_skills": [
+      "Communication",
+      "Adaptabilité",
+      "Empathie",
+      "Attention aux détails"
+    ]
+  },
+  "experience": [
+    {
+      "poste": "Développeur Web & Systèmes d'Information",
+      "entreprise": "IAAI Academy",
+      "dates": "Mai-Juin 2025",
+      "missions": [
+        "Extraction automatisée de contenus depuis PDF",
+        "Interface dynamique avec rendu mathématique"
+      ]
+    },
+    {
+      "poste": "Freelance - Application de réservation",
+      "entreprise": "",
+      "dates": "",
+      "missions": [
+        "Création d’une application web pour la gestion d’un événement étudiant",
+        "Authentification JWT, calculs dynamiques, génération de PDF, tableau de bord admin"
+      ]
+    },
+    {
+      "poste": "Stage d'observation",
+      "entreprise": "",
+      "dates": "",
+      "missions": [
+        "Suivi du traitement des commandes informatisées",
+        "Aide à la gestion de données et amélioration de suivi interne"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "diplome": "BTS ALKENDI - Casablanca",
+      "ecole": "",
+      "annee": "2023-2025"
+    },
+    {
+      "diplome": "Lycee Ben Msick - Casablanca",
+      "ecole": "",
+      "annee": "2022-2023"
+    }
+  ]
+}
