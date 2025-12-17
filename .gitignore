@@ -57,5 +57,7 @@ schemas_pres/
 tools/
 *.png
 
+# Autoriser le dossier docs/ (présentations, rapports)
+!docs/
 # Presentation Script (Private)
 PRESENTATION_SCRIPT.md

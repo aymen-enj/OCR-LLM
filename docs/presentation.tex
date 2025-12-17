@@ -406,4 +406,57 @@
     \Large \textbf{Merci de votre attention !}
 \end{frame}
 
+% -----------------------------------------------------------------------------
+% SLIDE ANNEXE : HARDWARE FOOTPRINT
+% -----------------------------------------------------------------------------
+\begin{frame}{Annexe : Analyse de l'Empreinte Matérielle}
+    \begin{columns}[T,onlytextwidth]
+        % --- COL 1: RAM ---
+        \column{0.32\textwidth}
+        \textbf{RAM (Mémoire)}
+        \begin{itemize}
+            \item \textbf{LLM local (Llama 3.2)}
+            \item Quantification \textbf{4-bit} : réduit l'utilisation à \textasciitilde4 Go
+            \item \textit{Le modèle doit tenir entièrement en RAM}
+            \item Recommandé : \textbf{8 Go min} / \textbf{16 Go confort}
+        \end{itemize}
+        % --- COL 2: CPU ---
+        \column{0.32\textwidth}
+        \textbf{CPU (Processeur)}
+        \begin{itemize}
+            \item \textbf{OCR} : Multi-thread (OpenMP) → tous cœurs sollicités
+            \item \textbf{LLM} : CPU-Bound, calcul flottant massif
+            \item Pas de GPU : instructions AVX/FMA utilisées
+            \item \textit{Latence expliquée par CPU uniquement}
+        \end{itemize}
+        % --- COL 3: Optim Logicielle ---
+        \column{0.32\textwidth}
+        \textbf{Optimisation Logicielle}
+        \begin{itemize}
+            \item Séparation Thread UI / Worker Thread
+            \item UI toujours réactive (aucun gel lors calculs lourds)
+            \item Exploitation efficace des multi-cœurs
+        \end{itemize}
+    \end{columns}
+
+    \vspace{0.4cm}
+    \begin{center}
+        % Bar chart: RAM Usage
+        \begin{tikzpicture}[y=0.35cm, x=0.07cm]
+            % Axes
+            \draw[->, thick] (0,0) -- (35,0) node[right]{\footnotesize Mo};
+            % Bars
+            \fill[gray!40] (0,0.7) rectangle (5,2.2);   % OCR
+            \fill[blue!80] (0,2.7) rectangle (25,4.2);  % LLM
+            % Labels
+            \node[left] at (0,1.45) {\footnotesize OCR};
+            \node[left] at (0,3.45) {\footnotesize LLM};
+            \node[above] at (5,2.2) {\scriptsize 500 Mo};
+            \node[above] at (25,4.2) {\scriptsize 4 Go};
+        \end{tikzpicture}
+        
+        {\scriptsize\itshape Bar chart : pic de RAM (OCR vs LLM)}
+    \end{center}
+\end{frame}
+
 \end{document}

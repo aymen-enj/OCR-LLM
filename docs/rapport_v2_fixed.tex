@@ -63,7 +63,7 @@
     filecolor=magenta,      
     urlcolor=primaryColor,
     citecolor=primaryColor,
-    pdftitle={Rapport Projet OCR & LLM Parser v3.3}
+    pdftitle={Rapport Projet OCR & LLM Parser}
 }
 
 % --- Personnalisation des titres ---
@@ -96,11 +96,11 @@
 \vspace*{-2cm}
     \begin{center}
         \begin{tabular}{@{} l c r @{}}
-    \includegraphics[width=3cm]{../609-6094376_uh1.png}
+    \includegraphics[width=3cm]{609-6094376_uh1.png}
     \hspace{1.7cm} & 
-    \includegraphics[width=6cm]{../Ministere-de-lEnseignement-Superieur-Concours-Emploi-Recrutement.png}
+    \includegraphics[width=6cm]{Ministere-de-lEnseignement-Superieur-Concours-Emploi-Recrutement.png}
     \hspace{1.7cm} & 
-    \includegraphics[width=3cm]{../logo-fst.png}
+    \includegraphics[width=3cm]{logo-fst.png}
 \end{tabular}
 
         \vspace*{1.5cm}
@@ -125,7 +125,7 @@
         
         \vspace*{2cm}
         
-        \textit{\large Module : Architecture des Ordinateurs}nts et Extraction de Données}
+        \textit{\large Module : Architecture des Ordinateurs}
         \vspace*{0.5cm}
         
         \textit{\large Filière : LST Génie Informatique}
@@ -186,7 +186,7 @@ Ces défauts limitent l'automatisation des processus de traitement de documents,
 
 \section{Objectif du projet}
 
-Le présent projet, intitulé \textbf{``Ultimate OCR \& LLM Parser (v3.3)''}, vise à pallier ces limitations en proposant une solution hybride combinant :
+Le présent projet, intitulé \textbf{``Ultimate OCR \& LLM Parser''}, vise à pallier ces limitations en proposant une solution hybride combinant :
 
 \begin{enumerate}
     \item L'extraction robuste par OCR (Tesseract) avec stratégie d'extraction adaptative,
@@ -233,8 +233,8 @@ Le pipeline du projet suit une architecture modulaire et séquentielle, où chaq
 % --- FIGURE TIKZ AUTOMATIQUE ---
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{../diagrams/diagramme_flux.png}
-    \caption{Diagramme de flux de données (Data Flow) de l'application OCR v3.3}
+    \includegraphics[width=1.0\textwidth]{diagramme_flux.png}
+    \caption{Diagramme de flux de données (Data Flow) de l'application OCR}
     \label{fig:pipeline}
 \end{figure}
 
@@ -307,7 +307,7 @@ Le prétraitement d'images améliore significativement la qualité de l'OCR. La 
 Code illustratif :
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../screenshots/code1.png}
+    \includegraphics[width=0.9\textwidth]{screenshots/code1.png}
     \caption{Prétraitement d'image (ImageProcessor)}
     \label{fig:code_preprocess}
 \end{figure}
@@ -425,7 +425,7 @@ Le diagramme de classes ci-dessous présente l'organisation des principaux modul
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../diagrams/diagramme_classes.png}
+    \includegraphics[width=0.9\textwidth]{diagramme_classes.png}
     \caption{Diagramme de Classes Simplifié}
     \label{fig:class_diagram}
 \end{figure}
@@ -438,7 +438,7 @@ Le diagramme suivant illustre le flux d'exécution séquentiel lors du traitemen
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../diagrams/diagramme_sequence.png}
+    \includegraphics[width=0.9\textwidth]{diagramme_sequence.png}
     \caption{Diagramme de Séquence : Traitement d'un document}
     \label{fig:seq_diagram}
 \end{figure}
@@ -479,7 +479,7 @@ La stratégie d'extraction a été pensée pour être robuste face à la variét
 Pour les PDF :
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../screenshots/code2.png}
+    \includegraphics[width=0.9\textwidth]{screenshots/code2.png}
     \caption{Tentative d'extraction structurée (Markdown)}
     \label{fig:code_md_extract}
 \end{figure}
@@ -491,7 +491,7 @@ Pour les PDF :
 Si le Markdown est insuffisant :
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../screenshots/code3.png}
+    \includegraphics[width=0.9\textwidth]{screenshots/code3.png}
     \caption{Fallback OCR pour PDF (Mode Image)}
     \label{fig:code_fallback}
 \end{figure}
@@ -502,7 +502,7 @@ Le prompt est construit dynamiquement selon le type détecté. Exemple pour un C
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../screenshots/code4.png}
+    \includegraphics[width=0.9\textwidth]{screenshots/code4.png}
     \caption{Appel LLM avec prompt dynamique et schéma JSON}
     \label{fig:code_llm}
 \end{figure}
@@ -566,7 +566,7 @@ Le pipeline a été testé sur plusieurs documents réels provenant du dossier \
 
 \subsection{Temps d'exécution}
 
-Estimations sur machine moderne (CPU 4-core, 8GB RAM, pas GPU) :
+Calcule sur machine moderne :
 \begin{table}[H]
     \centering
     \renewcommand{\arraystretch}{1.4}
@@ -581,7 +581,7 @@ Estimations sur machine moderne (CPU 4-core, 8GB RAM, pas GPU) :
         Total (1 document 3 pages) & 25-40 & estimé \\
         \hline
     \end{tabular}
-    \caption{Estimations de temps par étape}
+    \caption{Calcule de temps par étape}
     \label{tab:timing}
 \end{table}
 
@@ -593,6 +593,33 @@ Sur un petit ensemble de test (3 documents réels) :
     \item \textbf{Factures} : 100\% structuré, \textasciitilde 85\% des lignes d'articles (limitation tableaux).
     \item \textbf{Formulaires} : 100\% structuré, \textasciitilde 90\% des champs.
 \end{itemize}
+
+\section{Analyse de l'Empreinte Matérielle (Hardware Footprint)}
+
+La pertinence de ce projet dans le cadre du module "Architecture des Ordinateurs" réside dans l'optimisation de l'interaction entre le logiciel (Pipeline OCR/LLM) et les ressources matérielles disponibles. L'exécution locale impose des contraintes fortes que nous avons analysées :
+
+\subsection{Consommation Mémoire (RAM)}
+L'exécution d'un LLM local est l'opération la plus coûteuse en mémoire.
+\begin{itemize}
+    \item \textbf{Modèle Ollama (Llama 3.2) :} Le modèle utilise la quantification (généralement 4-bit, \textit{q4\_0}) pour réduire son empreinte. En fonctionnement, il occupe environ \textbf{3.8 Go à 4.5 Go} de RAM.
+    \item \textbf{Tesseract OCR :} Lors du traitement d'images haute résolution (300 DPI), la conversion bitmap intermédiaire par \textit{pdf2image} peut provoquer des pics de consommation mémoire (~500 Mo par page).
+    \item \textbf{Recommandation :} Une machine avec \textbf{8 Go de RAM} est le minimum vital, tandis que \textbf{16 Go} est recommandé pour éviter le \textit{Swapping} (utilisation du disque comme extension de la RAM), qui dégraderait drastiquement les performances.
+\end{itemize}
+
+\subsection{Charge Processeur (CPU) et Parallélisme}
+Le pipeline sollicite le CPU de deux manières distinctes :
+\begin{enumerate}
+    \item \textbf{OCR (CPU-Bound) :} Tesseract utilise nativement le multi-threading (via OpenMP) pour paralléliser la reconnaissance des caractères sur les différents cœurs du processeur. On observe une utilisation CPU proche de 100\% sur tous les cœurs durant cette phase.
+    \item \textbf{Inférence LLM (Matrix Operations) :} Le calcul des tenseurs pour le LLM est intensif en calcul flottant (FLOPS). Sans GPU dédié (CUDA), cette charge repose entièrement sur le CPU, expliquant la latence de 15-20 secondes.
+\end{enumerate}
+
+\subsection{Gestion des Threads (Software vs Hardware)}
+Pour garantir la réactivité de l'interface graphique (GUI), nous avons implémenté un modèle \textit{Multi-threading} au niveau applicatif :
+\begin{itemize}
+    \item \textbf{Main Thread :} Gère exclusivement la boucle d'événements de l'interface (affichage, clics), consommant très peu de cycles CPU.
+    \item \textbf{Worker Thread :} Exécute le pipeline lourd (I/O disque $\rightarrow$ OCR $\rightarrow$ LLM).
+\end{itemize}
+Cette séparation permet d'exploiter l'architecture multi-cœurs du processeur : pendant que le \textit{Worker Thread} sature un ou plusieurs cœurs pour le calcul, le \textit{Main Thread} reste fluide sur un autre cœur logique.
 
 \section{Analyse des erreurs et limitations}
 
@@ -629,6 +656,14 @@ Le LLM corrige efficacement les erreurs courantes :
 % CHAPITRE 5 : INTERFACE GRAPHIQUE
 % =============================================================================
 \chapter{Interface Graphique Utilisateur}
+
+\section{Interface graphique}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{gui.png}
+    \caption{Interface d'utilisateur}
+    \label{fig:gui}
+\end{figure}
 
 \section{Motivation et objectifs}
 
@@ -692,7 +727,7 @@ L'application GUI est implémentée dans la classe \texttt{OCRApp} qui hérite d
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../screenshots/code5.png}
+    \includegraphics[width=0.9\textwidth]{screenshots/code5.png}
     \caption{Architecture de la classe OCRApp}
     \label{fig:code_ocrapp}
 \end{figure}
@@ -756,7 +791,7 @@ Pour éviter le gel de l'interface pendant le traitement (qui peut durer 10-30 s
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../screenshots/code6.png}
+    \includegraphics[width=0.9\textwidth]{screenshots/code6.png}
     \caption{Traitement asynchrone (Threading)}
     \label{fig:code_threading}
 \end{figure}
@@ -767,7 +802,7 @@ L'intégration de TkinterDnD2 permet un glisser-déposer natif :
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../screenshots/code7.png}
+    \includegraphics[width=0.9\textwidth]{screenshots/code7.png}
     \caption{Configuration Drag \& Drop}
     \label{fig:code_drag_drop}
 \end{figure}
@@ -914,7 +949,7 @@ L'interface graphique actuelle est fonctionnelle et complète, mais plusieurs am
 
 \section{Synthèse des réalisations}
 
-Le projet ``Ultimate OCR \& LLM Parser (v3.3)'' a démontré la viabilité d'une approche hybride combinant extraction OCR classique, prétraitement d'images, classification heuristique et post-traitement par modèle de langage de grande taille. Les points clés réalisés sont :
+Le projet ``Ultimate OCR \& LLM Parser`` a démontré la viabilité d'une approche hybride combinant extraction OCR classique, prétraitement d'images, classification heuristique et post-traitement par modèle de langage de grande taille. Les points clés réalisés sont :
 
 \begin{itemize}
     \item $\checkmark$ Pipeline robuste et modulaire, gérant plusieurs formats d'entrée et types de documents.
@@ -995,29 +1030,5 @@ ollama pull llama3.2
 python ocr_extractor.py input/mon_cv.pdf
 python ocr_extractor.py input/facture.pdf --type facture --model llama3.2
 \end{lstlisting}
-
-\section{Structure des fichiers}
-
-\begin{verbatim}
-projet_ocr_fst/
-├── ocr_gui.py                # APPLICATION PRINCIPALE (Interface Graphique)
-├── ocr_extractor.py          # Moteur backend d'extraction et IA
-├── scripts/                  # Scripts utilitaires
-│   ├── start_gui.bat         # Lancement rapide
-│   └── build_exe.bat         # Compilation .exe
-├── docs/                     # Documentation et Rapports
-│   ├── presentation.tex      # Présentation Beamer
-│   └── rapport_v2_fixed.tex  # Rapport complet LaTeX
-├── diagrams/                 # Diagrammes du projet
-│   └── diagramme_*.png
-├── GUI_GUIDE.md              # Guide utilisateur de l'interface
-├── QUICK_START.md            # Guide de démarrage
-├── requirements.txt          # Dépendances Python
-├── input/                    # Dossier pour vos documents
-│   └── (Vos PDF/Images)
-└── output/                   # Résultats JSON générés
-    ├── mon_cv_data.json
-    └── ...
-\end{verbatim}
 
 \end{document}
