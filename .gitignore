@@ -42,7 +42,6 @@ rapport.tex
 *.toc
 *.lof
 *.lot
-*.pdf
 *.gls
 *.defs
 *.ist
