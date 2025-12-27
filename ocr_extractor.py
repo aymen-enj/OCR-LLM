@@ -289,7 +289,7 @@ def merge_data(llm_data: Dict, raw_text: str, doc_type: str) -> Dict:
     return llm_data
 
 def main():
-    parser = argparse.ArgumentParser(description="OCR Extractor v3.3")
+    parser = argparse.ArgumentParser(description="OCR Extractor")
     parser.add_argument("input", type=Path, help="Fichier d'entrée")
     # Modification ici : 'auto' est le defaut, mais on peut forcer
     parser.add_argument("--type", choices=['auto', 'cv', 'facture', 'formulaire'], default='auto')

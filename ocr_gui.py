@@ -141,7 +141,7 @@ class OCRApp(ctk.CTk, TkinterDnD.DnDWrapper):
         ).pack(pady=(15, 5), padx=20, anchor="w")
         
         self.model_var = ctk.StringVar(value="llama3.2")
-        models = ["llama3.2", "mistral", "llama2", "codellama"]
+        models = ["llama3.2", "mistral"]
         self.model_menu = ctk.CTkOptionMenu(
             self.left_frame,
             values=models,
